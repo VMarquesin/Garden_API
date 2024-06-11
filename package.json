@@ -1,0 +1,30 @@
+{
+  "name": "api_nodejs_2des_a_2sem_24",
+  "version": "1.0.0",
+  "description": "Aula API node 2º desenvolvimento",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js", 
+    "dev": "nodemon index.js", 
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ewertonjsilva/api_nodejs_2des_a_2sem_24.git"
+  },
+  "keywords": ["API", "NodeJS", "MySQL"],
+  "author": "Ewerton",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ewertonjsilva/api_nodejs_2des_a_2sem_24/issues"
+  },
+  "homepage": "https://github.com/ewertonjsilva/api_nodejs_2des_a_2sem_24#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.3",
+    "mysql2": "^3.9.2"
+  }, 
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
