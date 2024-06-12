@@ -5,10 +5,8 @@ module.exports = {
       try {
          //instruções SQL
          const sql = ` SELECT
-            usu_id, usu_nome, usu_nick, usu_email, usu_senha,
-            usu_tipo, usu_ativo = 1 AS usu_ativo
-            FROM usuarios
-            WHERE usu_ativo = 1;`;
+            usu_id, usu_nome, usu_nick, usu_email, usu_senha, usu_adm
+            FROM usuarios`;
          //executa instruçoes SQL e armazana o resultado na variável usuários
          const usuarios = await db.query(sql);
          //armazana em uma variável o número de resgistro retornados
@@ -33,24 +31,22 @@ module.exports = {
          //parametros recebidos no corp da requisição
          const {
             usu_nome,
+            usu_nick,
             usu_email,
-            usu_dt_nasc,
             usu_senha,
-            usu_tipo,
-            usu_ativo,
+            usu_adm,
          } = resquest.body;
          //instrução SQL
          const sql = `INSERT INTO usuarios
-            (usu_nome, usu_email, usu_dt_nasc, usu_senha, usu_tipo, usu_ativo)
-            VALUES (?, ?, ?, ?, ?, ?)`;
+            (usu_nome,  usu_nick, usu_email, usu_senha, usu_adm)
+            VALUES (?, ?, ?, ?, ?)`;
          //definiçaõ dos dados a serem inseriodos em um array
          const values = [
             usu_nome,
+            usu_nick,
             usu_email,
-            usu_dt_nasc,
             usu_senha,
-            usu_tipo,
-            usu_ativo,
+            usu_adm,
          ];
          //execução da instrução sql passando os parametros
          const execSql = await db.query(sql, values);
@@ -76,26 +72,24 @@ module.exports = {
          //parametro recebidos pelo corpo da requisição
          const {
             usu_nome,
+            usu_nick,
             usu_email,
-            usu_dt_nasc,
             usu_senha,
-            usu_tipo,
-            usu_ativo,
+            usu_adm,
          } = request.body;
          //parametro recebido pela URl via params ex: /usuario/1
          const { usu_id } = request.params;
          //instruções SQL
-         const sql = `UPDATE usuarios SET usu_nome = ?, usu_email = ?,
-            usu_dt_nasc = ?, usu_senha = ?, usu_tipo = ?,
-            usu_ativo = ? WHERE usu_id = ?;`;
+         const sql = `UPDATE usuarios SET usu_nome = ?, usu_nick = ?,
+            usu_email = ?, usu_senha = ?, usu_adm = ?,
+            WHERE usu_id = ?;`;
          //preparo do array com dados que serão atualizados
          const values = [
             usu_nome,
+            usu_nick,
             usu_email,
-            usu_dt_nasc,
             usu_senha,
-            usu_tipo,
-            usu_ativo,
+            usu_adm,
             usu_id,
          ];
          //execução e obtenção de confirmação da atualização realizada
@@ -139,33 +133,34 @@ module.exports = {
          });
       }
    },
-   async ocultarUsuario(request, response) {
-      try {
-         const usu_ativo = false;
-         const { usu_id } = request.params;
-         const sql = `UPDATE usuairos SET usu_ativo = ?
-                WHERE usu_id = ?;`;
-         const values = [usu_ativo.usu_id];
-         const atualizacao = await db.query(sql, values);
+   // async ocultarUsuario(request, response) {
+   //    try {
+   //       const usu_ativo = false;
+   //       const { usu_id } = request.params;
+   //       const sql = `UPDATE paciente SET paci_status = ?
+   //             FROM paciente
+   //             WHERE usu_id = ?;`;
+   //       const values = [usu_ativo.usu_id];
+   //       const atualizacao = await db.query(sql, values);
 
-         return response.status(200).json({
-            sucesso: true,
-            mensagem: `Usuário ${usu_id} excluído com sucesso`,
-            dados: atualizacao[0].affectedRows,
-         });
-      } catch (error) {
-         return response.status(500).json({
-            sucesso: false,
-            mensagem: "Erro na requisição.",
-            dados: error.message,
-         });
-      }
-   },
+   //       return response.status(200).json({
+   //          sucesso: true,
+   //          mensagem: `Usuário ${usu_id} excluído com sucesso`,
+   //          dados: atualizacao[0].affectedRows,
+   //       });
+   //    } catch (error) {
+   //       return response.status(500).json({
+   //          sucesso: false,
+   //          mensagem: "Erro na requisição.",
+   //          dados: error.message,
+   //       });
+   //    }
+   // },
    async login(request, response) {
       try {
          const { usu_email, usu_senha } = request.body;
 
-         const sql = `SELECT usu_id, usu_nome, usu_tipo FROM usuarios 
+         const sql = `SELECT usu_id, usu_nome, usu_adm FROM usuarios 
                 WHERE usu_email = ? AND usu_senha = ? AND usu_ativo = 1;`;
 
          const values = [usu_email, usu_senha];
