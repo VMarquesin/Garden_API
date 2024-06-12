@@ -19,7 +19,6 @@ router.post('/usuarios/login', UsuariosController.login);
 // diario
 const Diario = require('../controllers/diario')
 
-
 router.get('')
 module.exports = router; 
 
