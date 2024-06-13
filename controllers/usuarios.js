@@ -29,25 +29,14 @@ module.exports = {
    async cadastrarUsuarios(resquest, response) {
       try {
          //parametros recebidos no corp da requisição
-         const {
-            usu_nome,
-            usu_nick,
-            usu_email,
-            usu_senha,
-            usu_adm,
-         } = resquest.body;
+         const { usu_nome, usu_nick, usu_email, usu_senha, usu_adm } =
+            resquest.body;
          //instrução SQL
          const sql = `INSERT INTO usuarios
             (usu_nome,  usu_nick, usu_email, usu_senha, usu_adm)
             VALUES (?, ?, ?, ?, ?)`;
          //definiçaõ dos dados a serem inseriodos em um array
-         const values = [
-            usu_nome,
-            usu_nick,
-            usu_email,
-            usu_senha,
-            usu_adm,
-         ];
+         const values = [usu_nome, usu_nick, usu_email, usu_senha, usu_adm];
          //execução da instrução sql passando os parametros
          const execSql = await db.query(sql, values);
          //identificação do ID do resgistro inserido
@@ -70,19 +59,13 @@ module.exports = {
    async editarUsuarios(request, response) {
       try {
          //parametro recebidos pelo corpo da requisição
-         const {
-            usu_nome,
-            usu_nick,
-            usu_email,
-            usu_senha,
-            usu_adm,
-         } = request.body;
+         const { usu_nome, usu_nick, usu_email, usu_senha, usu_adm } =
+            request.body;
          //parametro recebido pela URl via params ex: /usuario/1
          const { usu_id } = request.params;
          //instruções SQL
          const sql = `UPDATE usuarios SET usu_nome = ?, usu_nick = ?,
-            usu_email = ?, usu_senha = ?, usu_adm = ?,
-            WHERE usu_id = ?;`;
+            usu_email = ?, usu_senha = ?, usu_adm = ?, WHERE usu_id = ?;`;
          //preparo do array com dados que serão atualizados
          const values = [
             usu_nome,

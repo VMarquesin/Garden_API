@@ -17,7 +17,8 @@ router.post('/usuarios/login', UsuariosController.login);
 // psicologo
 
 // diario
-const Diario = require('../controllers/diario')
+
+// const Diario = require('../controllers/diario')
 
 router.get('')
 module.exports = router; 
