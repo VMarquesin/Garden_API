@@ -19,11 +19,14 @@ router.post('/usuarios/login', UsuariosController.login);
 router.get('/paciente', PacienteController.listaPacientes);
 router.post('/paciente', PacienteController.cadastrarPacientes);
 router.patch('/paciente/:paciente_id', PacienteController.editarPacientes);
-router.delete('/usuarios/:paciente_id', PacienteController.apagarPacientes);
+router.delete('/paciente/:paciente_id', PacienteController.apagarPacientes);
 // router.post('/usuarios/login', UsuariosController.login);
 
 // diario
-
+router.get('/paciente', PacienteController.listaPacientes);
+router.post('/paciente', PacienteController.cadastrarPacientes);
+router.patch('/paciente/:paciente_id', PacienteController.editarPacientes);
+router.delete('/paciente/:paciente_id', PacienteController.apagarPacientes);
 // const Diario = require('../controllers/diario')
 
 router.get('')

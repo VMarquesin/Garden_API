@@ -1,21 +1,21 @@
 const db = require("../database/connection");
 
 module.exports = {
-   async listarUsuarios(request, response) {
+   async listarDiario(request, response) {
       try {
          //instruções SQL
          const sql = ` SELECT
-            usu_id, usu_nome, usu_nick, usu_email, usu_senha, usu_adm
-            FROM usuarios`;
+            diario_id, paciente_id, diario_relato, diario_data
+            FROM diario`;
          //executa instruçoes SQL e armazana o resultado na variável usuários
-         const usuarios = await db.query(sql);
+         const diario = await db.query(sql);
          //armazana em uma variável o número de resgistro retornados
-         const nItens = usuarios[0].length;
+         const nItens = diario[0].length;
 
          return response.status(200).json({
             sucesso: true,
-            mensagem: "Lista de usuário.",
-            dados: usuarios[0],
+            mensagem: "Lista de diários.",
+            dados: diario[0],
             nItens,
          });
       } catch (error) {
@@ -29,23 +29,23 @@ module.exports = {
    async cadastrarUsuarios(request, response) {
       try {
          //parametros recebidos no corp da requisição
-         const { usu_nome, usu_nick, usu_email, usu_senha, usu_adm } =
+         const { paciente_id, diario_relato, diario_data } =
             request.body;
          //instrução SQL
-         const sql = `INSERT INTO usuarios
-            (usu_nome,  usu_nick, usu_email, usu_senha, usu_adm)
-            VALUES (?, ?, ?, ?, ?)`;
+         const sql = `INSERT INTO diario
+            ( paciente_id, diario_relato, diario_data)
+            VALUES (?, ?, ?, ?)`;
          //definiçaõ dos dados a serem inseriodos em um array
-         const values = [usu_nome, usu_nick, usu_email, usu_senha, usu_adm];
+         const values = [paciente_id, diario_relato, diario_data];
          //execução da instrução sql passando os parametros
          const execSql = await db.query(sql, values);
          //identificação do ID do resgistro inserido
-         const usu_id = execSql[0].insertId;
+         const diario_id = execSql[0].insertId;
 
          return response.status(200).json({
             sucesso: true,
-            mensagem: "Cadastro de usuário efetuado com sucesso.",
-            dados: usu_id,
+            mensagem: "Cadastro do diário efetuado com sucesso.",
+            dados: diario_id,
             //menSql: execSql
          });
       } catch (error) {
@@ -59,10 +59,10 @@ module.exports = {
    async editarUsuarios(request, response) {
       try {
          //parametro recebidos pelo corpo da requisição
-         const { usu_nome, usu_nick, usu_email, usu_senha, usu_adm } =
+         const { paciente_id, diario_relato, diario_data } =
             request.body;
          //parametro recebido pela URl via params ex: /usuario/1
-         const { usu_id } = request.params;
+         const { diario_id } = request.params;
          //instruções SQL
          const sql = `UPDATE usuarios SET usu_nome = ?, usu_nick = ?,
             usu_email = ?, usu_senha = ?, usu_adm = ? WHERE usu_id = ?;`;

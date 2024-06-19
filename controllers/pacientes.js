@@ -28,7 +28,7 @@ module.exports = {
          });
       }
    },
-   async cadastrarPacientes(resquest, response) {
+   async cadastrarPacientes(request, response) {
       try {
          //parametros recebidos no corp da requisição
          const {
@@ -41,7 +41,7 @@ module.exports = {
             paci_trabalho,
             paci_estado_civil,
             paci_status,
-         } = resquest.body;
+         } = request.body;
          //instrução SQL
          const sql = `INSERT INTO paciente
             (paciente_id,  paci_telefone, paci_cpf, paci_filho,  paci_escolaridade,
@@ -81,14 +81,22 @@ module.exports = {
    async editarPacientes(request, response) {
       try {
          //parametro recebidos pelo corpo da requisição
-         const { usu_nome, usu_nick, usu_email, usu_senha, usu_adm } =
-            request.body;
+         const {
+            paci_telefone,
+            paci_cpf,
+            paci_filho,
+            paci_escolaridade,
+            paci_data_nasc,
+            paci_trabalho,
+            paci_estado_civil,
+            paci_status,
+         } = request.body;
          //parametro recebido pela URl via params ex: /usuario/1
          const { paciente_id } = request.params;
          //instruções SQL
          const sql = `UPDATE paciente SET paci_telefone = ?, paci_cpf = ?,
             paci_filho = ?, paci_escolaridade = ?, paci_data_nasc = ?,
-            paci_trabalho = ?, paci_estado_civil = ?, WHERE paciente_id = ?;`;
+            paci_trabalho = ?, paci_estado_civil = ?, paci_status = ? WHERE paciente_id = ?;`;
          //preparo do array com dados que serão atualizados
          const values = [
             paci_telefone,
@@ -98,6 +106,7 @@ module.exports = {
             paci_data_nasc,
             paci_trabalho,
             paci_estado_civil,
+            paci_status,
             paciente_id,
          ];
          //execução e obtenção de confirmação da atualização realizada
@@ -122,9 +131,9 @@ module.exports = {
          //parametro passado via URL na chamada da api pelo front-end
          const { paciente_id } = request.params;
          //comando da exclusão
-         const sql = `DELETE FROM usuarios WHERE paciente_id = ?`;
+         const sql = `DELETE FROM paciente WHERE paciente_id = ?`;
          //array com parametros da exclusão
-         const values = [usu_id];
+         const values = [paciente_id];
          //executa instrução no banco de dados
          const excluir = await db.query(sql, values);
 
