@@ -14,7 +14,8 @@ const AtividadePacienteController = require("../controllers/atividade_paciente")
 const PprController = require("../controllers/ppr");
 const EnderecoController = require("../controllers/endereco");
 const EnderecoUsuarioController = require("../controllers/endereco_usuario");
-const Data_sessaoController = require("../controllers/data_sessao");
+const Data_sessaoController = require("../controllers/data_sessao")
+const Psi_anotacaoController = require("../controllers/psi_anotacao");
 
 //  paciente
 router.get("/usuarios", UsuariosController.listarUsuarios);
@@ -47,10 +48,7 @@ router.delete("/emocao/:emo_id", EmocaoController.apagarEmocao);
 router.get("/emocao_paciente", Emocao_pacienteController.listarEmocao_paciente);
 router.post("/emocao_paciente",Emocao_pacienteController.cadastrarEmocao_paciente);
 router.patch("/emocao_paciente/:epa_id",Emocao_pacienteController.editarEmocao_paciente);
-router.delete(
-   "/emocao_paciente/:epa_id",
-   Emocao_pacienteController.apagarEmocao_paciente
-);
+router.delete("/emocao_paciente/:epa_id",Emocao_pacienteController.apagarEmocao_paciente);
 
 //psicologo
 router.get("/psicologo", PsicologoController.listarPsicologo);
@@ -74,10 +72,7 @@ router.delete("/atividade/:ati_id", AtividadeController.apagarAtividade);
 router.get("/atividade_paciente",AtividadePacienteController.listarAtividadePaciente);
 router.post("/atividade_paciente",AtividadePacienteController.cadastrarAtividadePaciente);
 router.patch("/atividade_paciente/:apa_id",AtividadePacienteController.editarAtividadePaciente);
-router.delete(
-   "/atividade_paciente/:apa_id",
-   AtividadePacienteController.apagarAtividadePaciente
-);
+router.delete("/atividade_paciente/:apa_id",AtividadePacienteController.apagarAtividadePaciente);
 
 //Ppr
 router.get("/ppr", PprController.listarPpr);
@@ -92,22 +87,10 @@ router.patch("/endereco/:endereco_id", EnderecoController.editarEndereco);
 router.delete("/endereco/:endereco_id", EnderecoController.apagarEndereco);
 
 //EndereçoUsuario
-router.get(
-   "/endereco_usuario",
-   EnderecoUsuarioController.listarEnderecoUsuario
-);
-router.post(
-   "/endereco_usuario",
-   EnderecoUsuarioController.cadastrarEnderecoUsuario
-);
-router.patch(
-   "/endereco_usuario/:endereco_id",
-   EnderecoUsuarioController.editarEnderecoUsuario
-);
-router.delete(
-   "/endereco_usuario/:endereco_id",
-   EnderecoUsuarioController.apagarEnderecoUsuario
-);
+router.get("/endereco_usuario",EnderecoUsuarioController.listarEnderecoUsuario);
+router.post("/endereco_usuario",EnderecoUsuarioController.cadastrarEnderecoUsuario);
+router.patch("/endereco_usuario/:endereco_id",EnderecoUsuarioController.editarEnderecoUsuario);
+router.delete("/endereco_usuario/:endereco_id",EnderecoUsuarioController.apagarEnderecoUsuario);
 
 // Data_Sessão
 router.get("/data_sessao", Data_sessaoController.listarDataSessao);
@@ -118,8 +101,8 @@ router.delete("/data_sessao/:dtsec_id", Data_sessaoController.apagarDataSessao);
 // Psi_anottação
 router.get("/psi_anotacao", Psi_anotacaoController.listarPsiAnotacao);
 router.post("/psi_anotacao", Psi_anotacaoController.cadastrarPsiAnotacao);
-router.patch("/psi_anotacao", Psi_anotacaoController.editarPsiAnotacao);
-router.delete("psi_anotacao", Psi_anotacaoController.apagPsiAnotacao);
+router.patch("/psi_anotacao/:psi_anotacao_id", Psi_anotacaoController.editarPsiAnotacao);
+router.delete("psi_anotacao/psi_anotacao_id", Psi_anotacaoController.apagarPsiAnotacao);
 
 router.get("");
 module.exports = router;
