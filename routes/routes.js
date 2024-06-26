@@ -45,14 +45,8 @@ router.delete("/emocao/:emo_id", EmocaoController.apagarEmocao);
 
 //Emoçao Paciente
 router.get("/emocao_paciente", Emocao_pacienteController.listarEmocao_paciente);
-router.post(
-   "/emocao_paciente",
-   Emocao_pacienteController.cadastrarEmocao_paciente
-);
-router.patch(
-   "/emocao_paciente/:epa_id",
-   Emocao_pacienteController.editarEmocao_paciente
-);
+router.post("/emocao_paciente",Emocao_pacienteController.cadastrarEmocao_paciente);
+router.patch("/emocao_paciente/:epa_id",Emocao_pacienteController.editarEmocao_paciente);
 router.delete(
    "/emocao_paciente/:epa_id",
    Emocao_pacienteController.apagarEmocao_paciente
@@ -77,18 +71,9 @@ router.patch("/atividade/:ati_id", AtividadeController.editarAtividade);
 router.delete("/atividade/:ati_id", AtividadeController.apagarAtividade);
 
 //Atividade_Paciente
-router.get(
-   "/atividade_paciente",
-   AtividadePacienteController.listarAtividadePaciente
-);
-router.post(
-   "/atividade_paciente",
-   AtividadePacienteController.cadastrarAtividadePaciente
-);
-router.patch(
-   "/atividade_paciente/:apa_id",
-   AtividadePacienteController.editarAtividadePaciente
-);
+router.get("/atividade_paciente",AtividadePacienteController.listarAtividadePaciente);
+router.post("/atividade_paciente",AtividadePacienteController.cadastrarAtividadePaciente);
+router.patch("/atividade_paciente/:apa_id",AtividadePacienteController.editarAtividadePaciente);
 router.delete(
    "/atividade_paciente/:apa_id",
    AtividadePacienteController.apagarAtividadePaciente
