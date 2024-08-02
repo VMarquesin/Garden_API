@@ -5,10 +5,10 @@ module.exports = {
       try {
          //instruções SQL
          const sql = ` SELECT
-         paciente_id,  paci_telefone, paci_cpf, paci_filho,  paci_escolaridade,
-         paci_data_nasc,  paci_trabalho, paci_estado_civil, paci_status = 1 AS paci_status
+         pac_id,  pac_telefone, pac_cpf, pac_filho,  pac_escolaridade,
+         pac_data_nasc,  pac_trabalho, pac_estado_civil, pac_status = 1 AS pac_status
          FROM paciente
-         WHERE paci_status = 1;`;
+         WHERE pac_status = 1;`;
          //executa instruçoes SQL e armazana o resultado na variável usuários
          const paciente = await db.query(sql);
          //armazana em uma variável o número de resgistro retornados
@@ -32,32 +32,32 @@ module.exports = {
       try {
          //parametros recebidos no corp da requisição
          const {
-            paciente_id,
-            paci_telefone,
-            paci_cpf,
-            paci_filho,
-            paci_escolaridade,
-            paci_data_nasc,
-            paci_trabalho,
-            paci_estado_civil,
-            paci_status,
+            pac_id,
+            pac_telefone,
+            pac_cpf,
+            pac_filho,
+            pac_escolaridade,
+            pac_data_nasc,
+            pac_trabalho,
+            pac_estado_civil,
+            pac_status,
          } = request.body;
          //instrução SQL
          const sql = `INSERT INTO paciente
-            (paciente_id,  paci_telefone, paci_cpf, paci_filho,  paci_escolaridade,
-            paci_data_nasc,  paci_trabalho, paci_estado_civil, paci_status )
+            (pac_id,  pac_telefone, pac_cpf, pac_filho,  pac_escolaridade,
+            pac_data_nasc,  pac_trabalho, pac_estado_civil, pac_status )
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
          //definiçaõ dos dados a serem inseriodos em um array
          const values = [
-            paciente_id,
-            paci_telefone,
-            paci_cpf,
-            paci_filho,
-            paci_escolaridade,
-            paci_data_nasc,
-            paci_trabalho,
-            paci_estado_civil,
-            paci_status,
+            pac_id,
+            pac_telefone,
+            pac_cpf,
+            pac_filho,
+            pac_escolaridade,
+            pac_data_nasc,
+            pac_trabalho,
+            pac_estado_civil,
+            pac_status,
          ];
          //execução da instrução sql passando os parametros
          const execSql = await db.query(sql, values);
@@ -67,7 +67,7 @@ module.exports = {
          return response.status(200).json({
             sucesso: true,
             mensagem: "Cadastro de paciente efetuado com sucesso.",
-            dados: paciente_id,
+            dados: pac_id,
             //menSql: execSql
          });
       } catch (error) {
@@ -82,39 +82,39 @@ module.exports = {
       try {
          //parametro recebidos pelo corpo da requisição
          const {
-            paci_telefone,
-            paci_cpf,
-            paci_filho,
-            paci_escolaridade,
-            paci_data_nasc,
-            paci_trabalho,
-            paci_estado_civil,
-            paci_status,
+            pac_telefone,
+            pac_cpf,
+            pac_filho,
+            pac_escolaridade,
+            pac_data_nasc,
+            pac_trabalho,
+            pac_estado_civil,
+            pac_status,
          } = request.body;
          //parametro recebido pela URl via params ex: /usuario/1
-         const { paciente_id } = request.params;
+         const { pac_id } = request.params;
          //instruções SQL
-         const sql = `UPDATE paciente SET paci_telefone = ?, paci_cpf = ?,
-            paci_filho = ?, paci_escolaridade = ?, paci_data_nasc = ?,
-            paci_trabalho = ?, paci_estado_civil = ?, paci_status = ? WHERE paciente_id = ?;`;
+         const sql = `UPDATE paciente SET pac_telefone = ?, pac_cpf = ?,
+            pac_filho = ?, pac_escolaridade = ?, pac_data_nasc = ?,
+            pac_trabalho = ?, pac_estado_civil = ?, pac_status = ? WHERE pac_id = ?;`;
          //preparo do array com dados que serão atualizados
          const values = [
-            paci_telefone,
-            paci_cpf,
-            paci_filho,
-            paci_escolaridade,
-            paci_data_nasc,
-            paci_trabalho,
-            paci_estado_civil,
-            paci_status,
-            paciente_id,
+            pac_telefone,
+            pac_cpf,
+            pac_filho,
+            pac_escolaridade,
+            pac_data_nasc,
+            pac_trabalho,
+            pac_estado_civil,
+            pac_status,
+            pac_id,
          ];
          //execução e obtenção de confirmação da atualização realizada
          const atualizaDados = await db.query(sql, values);
 
          return response.status(200).json({
             sucesso: true,
-            mensagem: `Paciente ${paciente_id} atualizado com sucesso!`,
+            mensagem: `Paciente ${pac_id} atualizado com sucesso!`,
             dados: atualizaDados[0].affectedRows,
             //mensSql: atualizaDAdos
          });
@@ -129,17 +129,17 @@ module.exports = {
    async apagarPacientes(request, response) {
       try {
          //parametro passado via URL na chamada da api pelo front-end
-         const { paciente_id } = request.params;
+         const { pac } = request.params;
          //comando da exclusão
-         const sql = `DELETE FROM paciente WHERE paciente_id = ?`;
+         const sql = `DELETE FROM paciente WHERE pac = ?`;
          //array com parametros da exclusão
-         const values = [paciente_id];
+         const values = [pac];
          //executa instrução no banco de dados
          const excluir = await db.query(sql, values);
 
          return response.status(200).json({
             sucesso: true,
-            mensagem: `Paciente ${paciente_id} excluído com sucesso`,
+            mensagem: `Paciente ${pac} excluído com sucesso`,
             dados: excluir[0].affectedRows,
          });
       } catch (error) {
@@ -154,7 +154,7 @@ module.exports = {
    //    try {
    //       const usu_ativo = false;
    //       const { usu_id } = request.params;
-   //       const sql = `UPDATE paciente SET paci_status = ?
+   //       const sql = `UPDATE paciente SET pac_status = ?
    //             FROM paciente
    //             WHERE usu_id = ?;`;
    //       const values = [usu_ativo.usu_id];

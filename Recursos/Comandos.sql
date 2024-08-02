@@ -43,10 +43,23 @@ ADD FOREIGN KEY (psi_id) REFERENCES psicologo(psi_id);
 ALTER TABLE lembrete
 ADD FOREIGN KEY (psi_id) REFERENCES psicologo(psi_id);
 
-CREATE TABLE psicologo (
-    psi_id INT AUTO_INCREMENT PRIMARY KEY,
-    endereco VARCHAR(100) NOT NULL,
-    cnpj VARCHAR(14) NOT NULL,
-    FOREIGN KEY (psi_id) REFERENCES usuarios(usu_id)
-);
+
+-- Apagar todas as tabelas do banco
+
+SHOW TABLES;
+
+SET FOREIGN_KEY_CHECKS = 0;
+
+SET @tables = NULL;
+SELECT GROUP_CONCAT('`', table_name, '`') INTO @tables
+FROM information_schema.tables
+WHERE table_schema = (SELECT DATABASE());
+
+SET @tables = IFNULL(@tables, 'DUMMY_TABLE_DOES_NOT_EXIST');
+SET @stmt = CONCAT('DROP TABLE IF EXISTS ', @tables);
+PREPARE stmt FROM @stmt;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+SET FOREIGN_KEY_CHECKS = 1;
 

@@ -101,9 +101,15 @@ module.exports = {
          //array com parametros da exclusão
          const values = [usu_id];
          //executa instrução no banco de dados
-         const excluir = await db.query(sql, values);
+         const [excluir] = await db.query(sql, values);
 
-         return response.status(200).json({
+         if (excluir.affectedRows === 0) {
+            return response.status(404).json({
+               sucesso: false,
+               mensagem: `Usuário com ID ${usu_id} não encontrado.`,
+            });
+      }
+         return response.status(200).json({  
             sucesso: true,
             mensagem: `Usuário ${usu_id} excluído com sucesso`,
             dados: excluir[0].affectedRows,

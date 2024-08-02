@@ -1,32 +1,32 @@
 CREATE TABLE usuarios (
-    usu_id INT  AUTO_INCREMENT PRIMARY KEY,
-    usu_nome VARCHAR(40) NOT NULL,
-    usu_nick VARCHAR(30) NOT NULL,
-    usu_email VARCHAR(80) NOT NULL,
-    usu_senha VARCHAR(20) NOT NULL,
+    usu_id INT AUTO_INCREMENT PRIMARY KEY,
+    usu_nome VARCHAR(60) NOT NULL,
+    usu_nick VARCHAR(30) NOT NULL UNIQUE,
+    usu_email VARCHAR(80) NOT NULL UNIQUE,
+    usu_senha VARCHAR(255) NOT NULL,
     usu_adm BIT NOT NULL
 );
+
 CREATE TABLE paciente (
-    paciente_id INT PRIMARY KEY DEFAULT 0,
-    paci_telefone VARCHAR(16) NOT NULL,
-    paci_cpf VARCHAR(15) NOT NULL,
-    paci_filho INT DEFAULT 0,
-    paci_escolaridade VARCHAR(50) NOT NULL,
-    paci_data_nasc DATE NOT NULL,
-    paci_trabalho VARCHAR(50) NOT NULL,
-    paci_estado_civil VARCHAR(50) NOT NULL,
-    paci_status BOOLEAN DEFAULT 0,
-    FOREIGN KEY (paciente_id) REFERENCES usuarios(usu_id)
+    pac_id INT AUTO_INCREMENT PRIMARY KEY,
+    pac_telefone VARCHAR(16) NOT NULL,
+    pac_cpf CHAR(11) NOT NULL UNIQUE,
+    pac_filho INT,
+    pac_escolaridade VARCHAR(50) NOT NULL,
+    pac_data_nasc DATE NOT NULL,
+    pac_trabalho VARCHAR(50) NOT NULL,
+    pac_estado_civil VARCHAR(50) NOT NULL,
+    pac_status BOOLEAN,
+    FOREIGN KEY (pac_id) REFERENCES usuarios(usu_id)
 );
 
 CREATE TABLE diario (
-    diario_id INT AUTO_INCREMENT PRIMARY KEY DEFAULT 0,
-    paciente_id INT DEFAULT 0,
-    diario_relato VARCHAR(2000) NOT NULL,
-    diario_data DATETIME DEFAULT '0000-00-00 00:00:00',
-    FOREIGN KEY (paciente_id) REFERENCES paciente(paciente_id)
+    dia_id INT AUTO_INCREMENT PRIMARY KEY,
+    pac_id INT,
+    dia_relato LONGTEXT NOT NULL,
+    dia_data DATETIME,
+    FOREIGN KEY (pac_id) REFERENCES paciente(pac_id)
 );
-
 
 CREATE TABLE emocao (
     emo_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -36,90 +36,93 @@ CREATE TABLE emocao (
 CREATE TABLE emocao_paciente (
     epa_id INT AUTO_INCREMENT PRIMARY KEY,
     emo_id INT NOT NULL,
-    emo_data DATETIME DEFAULT '0000-00-00 00:00:00',
-    paciente_id INT DEFAULT 0,
+    emo_data DATETIME,
+    pac_id INT,
     FOREIGN KEY (emo_id) REFERENCES emocao(emo_id),
-    FOREIGN KEY (paciente_id) REFERENCES paciente(paciente_id)
+    FOREIGN KEY (pac_id) REFERENCES paciente(pac_id)
 );
-
-CREATE TABLE endereco (
-    endereco_id INT AUTO_INCREMENT PRIMARY KEY,
-    cep VARCHAR(20) NOT NULL,
-    bairro VARCHAR(50) NOT NULL,
-    rua VARCHAR(50) NOT NULL,
-    numero INT NOT NULL,
-    complemento VARCHAR(25)    
-);
-
-CREATE TABLE endereco_usuario (
-	endereco_id INT PRIMARY KEY,
-    paciente_id INT NOT NULL,
-    psi_id INT NOT NULL,
-    FOREIGN KEY (psi_id) REFERENCES psicologo(psi_id),
-    FOREIGN KEY (paciente_id) REFERENCES paciente(paciente_id),
-    FOREIGN KEY (endereco_id) REFERENCES endereco(endereco_id)
-);
-
 
 CREATE TABLE psicologo (
     psi_id INT AUTO_INCREMENT PRIMARY KEY,
-    endereco VARCHAR(100) NOT NULL,
-    cnpj VARCHAR(14) NOT NULL,
+    psi_endereco VARCHAR(100) NOT NULL,
+    psi_cnpj CHAR(14) NOT NULL UNIQUE,
     FOREIGN KEY (psi_id) REFERENCES usuarios(usu_id)
+);
+
+CREATE TABLE endereco (
+    end_id INT AUTO_INCREMENT PRIMARY KEY,
+    end_cep VARCHAR(20) NOT NULL,
+    end_bairro VARCHAR(50) NOT NULL,
+    end_rua VARCHAR(50) NOT NULL,
+    end_numero INT NOT NULL,
+    end_complemento VARCHAR(50)
+);
+
+CREATE TABLE endereco_usuario (
+    eus_id INT AUTO_INCREMENT PRIMARY KEY,
+    end_id INT NOT NULL,
+    pac_id INT NOT NULL,
+    psi_id INT NOT NULL,
+    FOREIGN KEY (psi_id) REFERENCES psicologo(psi_id),
+    FOREIGN KEY (pac_id) REFERENCES paciente(pac_id),
+    FOREIGN KEY (end_id) REFERENCES endereco(end_id)
 );
 
 
 CREATE TABLE atividade (
     ati_id INT AUTO_INCREMENT PRIMARY KEY,
     ati_descricao VARCHAR(350) NOT NULL,
-    atividade_data DATETIME DEFAULT '0000-00-00 00:00:00',
+    ati_data DATETIME,
     psi_id INT NOT NULL,
     FOREIGN KEY (psi_id) REFERENCES psicologo(psi_id)
 );
 
 CREATE TABLE atividade_paciente (
     apa_id INT AUTO_INCREMENT PRIMARY KEY,
-    ati_id INT DEFAULT 0,
-    paciente_id INT NOT NULL,
-    UNIQUE (apa_id),
+    ati_id INT,
+    pac_id INT NOT NULL,
     FOREIGN KEY (ati_id) REFERENCES atividade(ati_id),
-    FOREIGN KEY (paciente_id) REFERENCES paciente(paciente_id)
+    FOREIGN KEY (pac_id) REFERENCES paciente(pac_id)
 );
 
-CREATE TABLE ppr (
-    ppr INT AUTO_INCREMENT PRIMARY KEY,
-    paciente_id INT DEFAULT 0,
-    psi_id INT DEFAULT 0,
-    ppr_datainicial DATE DEFAULT '0000-00-00',
-    ppr_datafinal DATE DEFAULT '0000-00-00',
-    FOREIGN KEY (paciente_id) REFERENCES paciente(paciente_id),
+CREATE TABLE paciente_psi_relacao (
+    ppr_id INT AUTO_INCREMENT PRIMARY KEY,
+    pac_id INT,
+    psi_id INT,
+    ppr_datainicial DATE,
+    ppr_datafinal DATE,
+    FOREIGN KEY (pac_id) REFERENCES paciente(pac_id),
     FOREIGN KEY (psi_id) REFERENCES psicologo(psi_id)
 );
 
-
 CREATE TABLE psi_anotacao (
-    psi_anotacao_id INT AUTO_INCREMENT PRIMARY KEY,
-    psi_id INT DEFAULT 0,
-    anotacao VARCHAR(2000),
-    anotacao_data DATETIME DEFAULT '0000-00-00 00:00:00',
-    paciente_id INT NOT NULL,
+    pan_id INT AUTO_INCREMENT PRIMARY KEY,
+    psi_id INT,
+    pan_anotacao TEXT,
+    pan_anotacao_data DATETIME,
+    pac_id INT NOT NULL,
     FOREIGN KEY (psi_id) REFERENCES psicologo(psi_id),
-    FOREIGN KEY (paciente_id) REFERENCES paciente(paciente_id)
+    FOREIGN KEY (pac_id) REFERENCES paciente(pac_id)
 );
 
+ALTER TABLE psi_anotacao MODIFY COLUMN pan_anotacao LONGTEXT;
+
 CREATE TABLE data_sessao (
-    dtsec_id INT AUTO_INCREMENT PRIMARY KEY,
+    dse_id INT AUTO_INCREMENT PRIMARY KEY,
     psi_id INT,
-    paciente_id INT,
+    pac_id INT,
+    dse_sessao_data DATETIME,
     FOREIGN KEY (psi_id) REFERENCES psicologo(psi_id),
-    FOREIGN KEY (paciente_id) REFERENCES paciente(paciente_id)
+    FOREIGN KEY (pac_id) REFERENCES paciente(pac_id)
 );
 
 CREATE TABLE lembrete (
-    lembrete_id INT AUTO_INCREMENT PRIMARY KEY,
-    lembrete_psi VARCHAR(300) NOT NULL,
+    lem_id INT AUTO_INCREMENT PRIMARY KEY,
+    lem_psi TEXT NOT NULL,
+    lem_data DATETIME,
     psi_id INT,
-    paciente_id INT,
+    pac_id INT,
     FOREIGN KEY (psi_id) REFERENCES psicologo(psi_id),
-    FOREIGN KEY (paciente_id) REFERENCES paciente(paciente_id)
+    FOREIGN KEY (pac_id) REFERENCES paciente(pac_id)
 );
+
