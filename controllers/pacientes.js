@@ -129,17 +129,23 @@ module.exports = {
    async apagarPacientes(request, response) {
       try {
          //parametro passado via URL na chamada da api pelo front-end
-         const { pac } = request.params;
+         const { pac_id } = request.params;
          //comando da exclusão
-         const sql = `DELETE FROM paciente WHERE pac = ?`;
+         const sql = `DELETE FROM paciente WHERE pac_id = ?`;
          //array com parametros da exclusão
-         const values = [pac];
+         const values = [pac_id];
          //executa instrução no banco de dados
-         const excluir = await db.query(sql, values);
+         const [excluir] = await db.query(sql, values);
 
+         if (excluir.affectedRows === 0) {
+            return response.status(404).json({
+               sucesso: false,
+               mensagem: `Paciente com ID ${pac_id} não encontrado.`,
+            });
+      }
          return response.status(200).json({
             sucesso: true,
-            mensagem: `Paciente ${pac} excluído com sucesso`,
+            mensagem: `Paciente ${pac_id} excluído com sucesso`,
             dados: excluir[0].affectedRows,
          });
       } catch (error) {
