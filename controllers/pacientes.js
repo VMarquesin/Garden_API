@@ -6,7 +6,7 @@ module.exports = {
          //instruções SQL
          const sql = ` SELECT
          pac_id,  pac_telefone, pac_cpf, pac_filho,  pac_escolaridade,
-         pac_data_nasc,  pac_trabalho, pac_estado_civil, pac_status = 1 AS pac_status
+         pac_data_nasc,  pac_trabalho, pac_estado_civil, usu_id, pac_status = 1 AS pac_status
          FROM paciente
          WHERE pac_status = 1;`;
          //executa instruçoes SQL e armazana o resultado na variável usuários
@@ -40,13 +40,14 @@ module.exports = {
             pac_data_nasc,
             pac_trabalho,
             pac_estado_civil,
+            usu_id,
             pac_status,
          } = request.body;
          //instrução SQL
          const sql = `INSERT INTO paciente
             (pac_id,  pac_telefone, pac_cpf, pac_filho,  pac_escolaridade,
-            pac_data_nasc,  pac_trabalho, pac_estado_civil, pac_status )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+            pac_data_nasc,  pac_trabalho, pac_estado_civil, usu_id, pac_status )
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
          //definiçaõ dos dados a serem inseriodos em um array
          const values = [
             pac_id,
@@ -57,7 +58,9 @@ module.exports = {
             pac_data_nasc,
             pac_trabalho,
             pac_estado_civil,
+            usu_id,
             pac_status,
+        
          ];
          //execução da instrução sql passando os parametros
          const execSql = await db.query(sql, values);
