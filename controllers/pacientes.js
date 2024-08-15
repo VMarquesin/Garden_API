@@ -138,14 +138,14 @@ module.exports = {
          //array com parametros da exclusão
          const values = [pac_id];
          //executa instrução no banco de dados
-         const [excluir] = await db.query(sql, values);
+         const excluir = await db.query(sql, values);
 
-         if (excluir.affectedRows === 0) {
-            return response.status(404).json({
-               sucesso: false,
-               mensagem: `Paciente com ID ${pac_id} não encontrado.`,
-            });
-      }
+         // if (result.affectedRows === 0) {
+         //    return response.status(404).json({
+         //       sucesso: false,
+         //       mensagem: `Paciente com ID ${pac_id} não encontrado.`,
+         //    });
+      //}
          return response.status(200).json({
             sucesso: true,
             mensagem: `Paciente ${pac_id} excluído com sucesso`,
