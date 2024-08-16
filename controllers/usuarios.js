@@ -97,24 +97,34 @@ module.exports = {
          //parametro passado via URL na chamada da api pelo front-end
          const { usu_id } = request.params;
          //comando da exclusão
+
+          // Verifica se o usu_id foi fornecido
+      if (!usu_id) {
+         return response.status(400).json({
+            sucesso: false,
+            mensagem: "ID do usuário não fornecido.",
+         });
+      }
          const sql = `DELETE FROM usuarios WHERE usu_id = ?`;
          //array com parametros da exclusão
          const values = [usu_id];
          //executa instrução no banco de dados
          const [result] = await db.query(sql, values);
 
-         if (result.affectedRows === 0) {
-            return response.status(404).json({
-               sucesso: false,
-               mensagem: `Usuário com ID ${usu_id} não encontrado.`,
-            });
+      // Verifica se algum usuário foi afetado (se o ID existe)
+      if (result.affectedRows === 0) {
+         return response.status(404).json({
+            sucesso: false,
+            mensagem: `Usuário com ID ${usu_id} não encontrado.`,
+         });
       }
          return response.status(200).json({  
             sucesso: true,
             mensagem: `Usuário ${usu_id} excluído com sucesso`,
-            dados: excluir[0].affectedRows,
+            dados:  result.affectedRows,
          });
       } catch (error) {
+         console.error('Erro ao tentar excluir usuário:', error); // Log do erro no console
          return response.status(500).json({
             sucesso: false,
             mensagem: "Erro na requisição.",

@@ -5,7 +5,8 @@ module.exports = {
       try {
          //instruções SQL
          const sql = ` SELECT
-            psi_id, endereco, cnpj
+            psi_id, psi_endereco
+            , psi_cnpj, usu_id
             FROM psicologo`;
          //executa instruçoes SQL e armazana o resultado na variável usuários
          const psicologo = await db.query(sql);
@@ -29,18 +30,21 @@ module.exports = {
    async cadastrarPsicologo(request, response) {
       try {
          //parametros recebidos no corp da requisição
-         const { psi_id, endereco, cnpj } =
+         const { psi_endereco
+            , psi_cnpj ,usu_id} =
             request.body;
          //instrução SQL
          const sql = `INSERT INTO psicologo
-            ( psi_id, endereco, cnpj)
+            ( psi_endereco
+             , psi_cnpj, usu_id)
             VALUES (?, ?, ?)`;
          //definiçaõ dos dados a serem inseriodos em um array
-         const values = [psi_id, endereco, cnpj];
+         const values = [psi_id, psi_endereco
+            , psi_cnpj, usu_id];
          //execução da instrução sql passando os parametros
          const execSql = await db.query(sql, values);
          //identificação do ID do resgistro inserido
-         execSql[0].insertId;
+         const psi_id = execSql[0].insertId;
 
          return response.status(200).json({
             sucesso: true,
@@ -59,14 +63,14 @@ module.exports = {
    async editarPsicologo(request, response) {
       try {
          //parametro recebidos pelo corpo da requisição
-         const { endereco, cnpj } = request.body;
+         const { psi_endereco, psi_cnpj } = request.body;
          //parametro recebido pela URl via params ex: /usuario/1
          const { psi_id } = request.params;
          //instruções SQL
-         const sql = `UPDATE psicologo SET psi_id = ?, endereco = ?,
-         cnpj = ? WHERE psi_id = ?;`;
+         const sql = `UPDATE psicologo SET psi_endereco
+          = ?, psi_cnpj = ? WHERE psi_id = ?;`;
          //preparo do array com dados que serão atualizados
-         const values = [psi_id, endereco, cnpj];
+         const values = [psi_endereco, psi_cnpj, psi_id];
          //execução e obtenção de confirmação da atualização realizada
          const atualizaDados = await db.query(sql, values);
 
