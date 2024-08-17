@@ -1,7 +1,7 @@
 const db = require("../database/connection");
 
 module.exports = {
-   async listarEmocao_paciente(request, response) {
+   async listarEmocaoPaciente(request, response) {
       try {
          //instruções SQL
          const sql = ` SELECT
@@ -26,11 +26,10 @@ module.exports = {
          });
       }
    },
-   async cadastrarEmocao_paciente(request, response) {
+   async cadastrarEmocaoPaciente(request, response) {
       try {
          //parametros recebidos no corp da requisição
-         const { emo_id, emo_data, pac_id } =
-            request.body;
+         const { emo_id, emo_data, pac_id } = request.body;
          //instrução SQL
          const sql = `INSERT INTO emocao_paciente
             ( emo_id, emo_data, pac_id)
@@ -56,7 +55,7 @@ module.exports = {
          });
       }
    },
-   async editarEmocao_paciente(request, response) {
+   async editarEmocaoPaciente(request, response) {
       try {
          //parametro recebidos pelo corpo da requisição
          const { emo_id, emo_data, pac_id } = request.body;
@@ -66,7 +65,7 @@ module.exports = {
          const sql = `UPDATE emocao_paciente SET emo_id = ?, emo_data = ?,
          pac_id = ? WHERE epa_id = ?;`;
          //preparo do array com dados que serão atualizados
-         const values = [ emo_id, emo_data, pac_id, epa_id];
+         const values = [emo_id, emo_data, pac_id, epa_id];
          //execução e obtenção de confirmação da atualização realizada
          const atualizaDados = await db.query(sql, values);
 
@@ -84,7 +83,7 @@ module.exports = {
          });
       }
    },
-   async apagarEmocao_paciente(request, response) {
+   async apagarEmocaoPaciente(request, response) {
       try {
          //parametro passado via URL na chamada da api pelo front-end
          const { epa_id } = request.params;

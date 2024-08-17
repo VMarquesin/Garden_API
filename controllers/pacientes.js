@@ -58,7 +58,6 @@ module.exports = {
             pac_estado_civil,
             usu_id,
             pac_status,
-        
          ];
          //execução da instrução sql passando os parametros
          const execSql = await db.query(sql, values);
@@ -143,7 +142,7 @@ module.exports = {
          //       sucesso: false,
          //       mensagem: `Paciente com ID ${pac_id} não encontrado.`,
          //    });
-      //}
+         //}
          return response.status(200).json({
             sucesso: true,
             mensagem: `Paciente ${pac_id} excluído com sucesso`,

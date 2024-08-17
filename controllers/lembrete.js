@@ -29,14 +29,13 @@ module.exports = {
    async cadastrarLembrete(request, response) {
       try {
          //parametros recebidos no corp da requisição
-         const {lem_psi, lem_data , psi_id,  pac_id } =
-            request.body;
+         const { lem_psi, lem_data, psi_id, pac_id } = request.body;
          //instrução SQL
          const sql = `INSERT INTO lembrete
             (lem_psi, lem_data, psi_id, pac_id)
             VALUES (?, ?, ?, ?)`;
          //definiçaõ dos dados a serem inseriodos em um array
-         const values = [lem_id, lem_psi,lem_data, psi_id,  pac_id];
+         const values = [lem_id, lem_psi, lem_data, psi_id, pac_id];
          //execução da instrução sql passando os parametros
          const execSql = await db.query(sql, values);
          //identificação do ID do resgistro inserido
@@ -59,7 +58,7 @@ module.exports = {
    async editarLembrete(request, response) {
       try {
          //parametro recebidos pelo corpo da requisição
-         const { lem_psi, lem_data, psi_id,  pac_id } = request.body;
+         const { lem_psi, lem_data, psi_id, pac_id } = request.body;
          //parametro recebido pela URl via params ex: /usuario/1
          const { lem_id } = request.params;
          //instruções SQL
@@ -108,4 +107,4 @@ module.exports = {
          });
       }
    },
-}
+};

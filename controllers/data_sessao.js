@@ -5,7 +5,7 @@ module.exports = {
       try {
          //instruções SQL
          const sql = ` SELECT
-            dtsec_id, psi_id, paciente_id,
+            dtsec_id, psi_id, pac_id, dse_sessao_data
             FROM data_sessao`;
          //executa instruçoes SQL e armazana o resultado na variável usuários
          const data_sessao = await db.query(sql);
@@ -29,18 +29,17 @@ module.exports = {
    async cadastrarDataSessao(request, response) {
       try {
          //parametros recebidos no corp da requisição
-         const { dtsec_id, psi_id, paciente_id, } =
-            request.body;
+         const { psi_id, pac_id, dse_sessao_data } = request.body;
          //instrução SQL
-         const sql = `INSERT INTO data_sessao
-            ( dtsec_id, psi_id, paciente_id,)
+         const sql = `INSERT INTO data_sessao 
+            ( psi_id, pac_id, dse_sessao_data)
             VALUES (?, ?, ?)`;
          //definiçaõ dos dados a serem inseriodos em um array
-         const values = [dtsec_id, psi_id, paciente_id];
+         const values = [psi_id, pac_id, dse_sessao_data];
          //execução da instrução sql passando os parametros
          const execSql = await db.query(sql, values);
          //identificação do ID do resgistro inserido
-         execSql[0].insertId;
+         const dtsec_id = execSql[0].insertId;
 
          return response.status(200).json({
             sucesso: true,
@@ -59,14 +58,14 @@ module.exports = {
    async editarDataSessao(request, response) {
       try {
          //parametro recebidos pelo corpo da requisição
-         const {  psi_id, paciente_id, } = request.body;
+         const { psi_id, pac_id, dse_sessao_data } = request.body;
          //parametro recebido pela URl via params ex: /usuario/1
          const { dtsec_id } = request.params;
          //instruções SQL
-         const sql = `UPDATE data_sessao SET dtsec_id = ?, psi_id = ?,
-         paciente_id = ? WHERE dtsec_id = ?;`;
+         const sql = `UPDATE data_sessao  SET psi_id = ?, pac_id = ?,
+         dse_sessao_data  = ? WHERE dtsec_id = ?;`;
          //preparo do array com dados que serão atualizados
-         const values = [dtsec_id, psi_id, paciente_id];
+         const values = [psi_id, pac_id, dse_sessao_data, dtsec_id];
          //execução e obtenção de confirmação da atualização realizada
          const atualizaDados = await db.query(sql, values);
 
@@ -108,4 +107,4 @@ module.exports = {
          });
       }
    },
-}
+};

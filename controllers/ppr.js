@@ -5,8 +5,8 @@ module.exports = {
       try {
          //instruções SQL
          const sql = ` SELECT
-         ppr, paciente_id, psi_id, ppr_datainicial, ppr_datafinal
-            FROM ppr`;
+         ppr, pac_id , psi_id, ppr_datainicial, ppr_datafinal
+         FROM ppr`;
          //executa instruçoes SQL e armazana o resultado na variável usuários
          const ppr = await db.query(sql);
          //armazana em uma variável o número de resgistro retornados
@@ -29,14 +29,14 @@ module.exports = {
    async cadastrarPpr(request, response) {
       try {
          //parametros recebidos no corp da requisição
-         const { paciente_id, psi_id, ppr_datainicial, ppr_datafinal } =
+         const { pac_id, psi_id, ppr_datainicial, ppr_datafinal } =
             request.body;
          //instrução SQL
          const sql = `INSERT INTO ppr
-            (paciente_id, psi_id, ppr_datainicial, ppr_datafinal)
+            (pac_id , psi_id, ppr_datainicial, ppr_datafinal)
             VALUES (?, ?, ?, ?)`;
          //definiçaõ dos dados a serem inseriodos em um array
-         const values = [paciente_id, psi_id, ppr_datainicial, ppr_datafinal];
+         const values = [pac_id, psi_id, ppr_datainicial, ppr_datafinal];
          //execução da instrução sql passando os parametros
          const execSql = await db.query(sql, values);
          //identificação do ID do resgistro inserido
@@ -59,21 +59,15 @@ module.exports = {
    async editarPpr(request, response) {
       try {
          //parametro recebidos pelo corpo da requisição
-         const { aciente_id, psi_id, ppr_datainicial, ppr_datafinal } =
+         const { pac_id, psi_id, ppr_datainicial, ppr_datafinal } =
             request.body;
          //parametro recebido pela URl via params ex: /usuario/1
          const { ppr } = request.params;
          //instruções SQL
-         const sql = `UPDATE ppr SET aciente_id = ?, psi_id = ?,
+         const sql = `UPDATE ppr SET pac_id = ?, psi_id = ?,
          ppr_datainicial = ?, ppr_datafinal = ? WHERE ppr = ?;`;
          //preparo do array com dados que serão atualizados
-         const values = [
-            aciente_id, 
-            psi_id, 
-            ppr_datainicial, 
-            ppr_datafinal,
-            ppr,
-         ];
+         const values = [pac_id, psi_id, ppr_datainicial, ppr_datafinal, ppr];
          //execução e obtenção de confirmação da atualização realizada
          const atualizaDados = await db.query(sql, values);
 
