@@ -29,18 +29,18 @@ module.exports = {
    async cadastrarEmocao(request, response) {
       try {
          //parametros recebidos no corp da requisição
-         const { emo_id, emo_descricao} =
+         const { emo_descricao} =
             request.body;
          //instrução SQL
          const sql = `INSERT INTO emocao
-            ( emo_id, emo_descricao)
-            VALUES (?, ?)`;
+            ( emo_descricao)
+            VALUES (?)`;
          //definiçaõ dos dados a serem inseriodos em um array
-         const values = [emo_id, emo_descricao];
+         const values = [emo_descricao];
          //execução da instrução sql passando os parametros
          const execSql = await db.query(sql, values);
          //identificação do ID do resgistro inserido
-         execSql[0].insertId;
+         const emo_id = execSql[0].insertId;
 
          return response.status(200).json({
             sucesso: true,

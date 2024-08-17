@@ -20,29 +20,29 @@ const Psi_anotacaoController = require("../controllers/psi_anotacao");
 //  paciente
 router.get("/usuarios", UsuariosController.listarUsuarios);
 router.post("/usuarios", UsuariosController.cadastrarUsuarios);
-router.patch("/usuarios/:usu_id", UsuariosController.editarUsuarios);
-router.delete("/usuarios/:usu_id", UsuariosController.apagarUsuarios);
+router.patch("/usuarios/:usu_id", UsuariosController.editarUsuarios);  //condição para usu não existente
+router.delete("/usuarios/:usu_id", UsuariosController.apagarUsuarios);  //condição para usu não existente
 router.post("/usuarios/login", UsuariosController.login);
 // router.delete('/usuarios/del/:usu_id', UsuariosController.ocultarUsuario);
 
 // paciente
 router.get("/paciente", PacienteController.listaPacientes);
 router.post("/paciente", PacienteController.cadastrarPacientes);
-router.patch("/paciente/:pac_id", PacienteController.editarPacientes);
-router.delete("/paciente/:pac_id", PacienteController.apagarPacientes);
+router.patch("/paciente/:pac_id", PacienteController.editarPacientes);  //condição paci não existente
+router.delete("/paciente/:pac_id", PacienteController.apagarPacientes);  //condição paci não existente
 // router.post('/usuarios/login', UsuariosController.login);
 
 //psicologo
 router.get("/psicologo", PsicologoController.listarPsicologo);
 router.post("/psicologo", PsicologoController.cadastrarPsicologo);
-router.patch("/psicologo/:psi_id", PsicologoController.editarPsicologo);
-router.delete("/psicologo/:psi_id", PsicologoController.apagarPsicologo);
+router.patch("/psicologo/:psi_id", PsicologoController.editarPsicologo);  // condição psi não encontrado
+router.delete("/psicologo/:psi_id", PsicologoController.apagarPsicologo);  //// condição psi não encontrado
 
 // diario
 router.get("/diario", DiarioController.listarDiario);
 router.post("/diario", DiarioController.cadastrarDiario);
-router.patch("/diario/:diario_id", DiarioController.editarDiario);
-router.delete("/diario/:diario_id", DiarioController.apagarDiario);
+router.patch("/diario/:dia_id", DiarioController.editarDiario);
+router.delete("/diario/:dia_id", DiarioController.apagarDiario);
 
 // emocao
 router.get("/emocao", EmocaoController.listarEmocao);
@@ -52,24 +52,15 @@ router.delete("/emocao/:emo_id", EmocaoController.apagarEmocao);
 
 //Emoçao Paciente
 router.get("/emocao_paciente", Emocao_pacienteController.listarEmocao_paciente);
-router.post(
-   "/emocao_paciente",
-   Emocao_pacienteController.cadastrarEmocao_paciente
-);
-router.patch(
-   "/emocao_paciente/:epa_id",
-   Emocao_pacienteController.editarEmocao_paciente
-);
-router.delete(
-   "/emocao_paciente/:epa_id",
-   Emocao_pacienteController.apagarEmocao_paciente
-);
+router.post("/emocao_paciente",Emocao_pacienteController.cadastrarEmocao_paciente);
+router.patch("/emocao_paciente/:epa_id",Emocao_pacienteController.editarEmocao_paciente);
+router.delete("/emocao_paciente/:epa_id",Emocao_pacienteController.apagarEmocao_paciente);
 
 // Lembrete
 router.get("/lembrete", LembreteController.listarLembrete);
 router.post("/lembrete", LembreteController.cadastrarLembrete);
-router.patch("/lembrete/:lembrete_id", LembreteController.editarLembrete);
-router.delete("/lembrete/:lembrete_id", LembreteController.apagarLembrete);
+router.patch("/lembrete/:lem_id", LembreteController.editarLembrete);
+router.delete("/lembrete/:lem_id", LembreteController.apagarLembrete);
 
 //Atividade
 router.get("/atividade", AtividadeController.listarAtividade);

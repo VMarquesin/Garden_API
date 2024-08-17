@@ -32,7 +32,6 @@ module.exports = {
       try {
          //parametros recebidos no corp da requisição
          const {
-            pac_id,
             pac_telefone,
             pac_cpf,
             pac_filho,
@@ -45,12 +44,11 @@ module.exports = {
          } = request.body;
          //instrução SQL
          const sql = `INSERT INTO paciente
-            (pac_id,  pac_telefone, pac_cpf, pac_filho,  pac_escolaridade,
+            ( pac_telefone, pac_cpf, pac_filho,  pac_escolaridade,
             pac_data_nasc,  pac_trabalho, pac_estado_civil, usu_id, pac_status )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
          //definiçaõ dos dados a serem inseriodos em um array
          const values = [
-            pac_id,
             pac_telefone,
             pac_cpf,
             pac_filho,
@@ -65,7 +63,7 @@ module.exports = {
          //execução da instrução sql passando os parametros
          const execSql = await db.query(sql, values);
          //identificação do ID do resgistro inserido
-         execSql[0].insertId;
+         const pac_id = execSql[0].insertId;
 
          return response.status(200).json({
             sucesso: true,

@@ -5,7 +5,7 @@ module.exports = {
       try {
          //instruções SQL
          const sql = ` SELECT
-         epa_id, emo_id, emo_data, paciente_id
+         epa_id, emo_id, emo_data, pac_id
             FROM emocao_paciente`;
          //executa instruçoes SQL e armazana o resultado na variável usuários
          const emocao_paciente = await db.query(sql);
@@ -29,14 +29,14 @@ module.exports = {
    async cadastrarEmocao_paciente(request, response) {
       try {
          //parametros recebidos no corp da requisição
-         const { emo_id, emo_data, paciente_id } =
+         const { emo_id, emo_data, pac_id } =
             request.body;
          //instrução SQL
          const sql = `INSERT INTO emocao_paciente
-            ( emo_id, emo_data, paciente_id)
+            ( emo_id, emo_data, pac_id)
             VALUES (?, ?, ?)`;
          //definiçaõ dos dados a serem inseriodos em um array
-         const values = [emo_id, emo_data, paciente_id];
+         const values = [emo_id, emo_data, pac_id];
          //execução da instrução sql passando os parametros
          const execSql = await db.query(sql, values);
          //identificação do ID do resgistro inserido
@@ -59,14 +59,14 @@ module.exports = {
    async editarEmocao_paciente(request, response) {
       try {
          //parametro recebidos pelo corpo da requisição
-         const { emo_id, emo_data, paciente_id } = request.body;
+         const { emo_id, emo_data, pac_id } = request.body;
          //parametro recebido pela URl via params ex: /usuario/1
          const { epa_id } = request.params;
          //instruções SQL
          const sql = `UPDATE emocao_paciente SET emo_id = ?, emo_data = ?,
-         paciente_id = ? WHERE epa_id = ?;`;
+         pac_id = ? WHERE epa_id = ?;`;
          //preparo do array com dados que serão atualizados
-         const values = [ emo_id, emo_data, paciente_id, epa_id];
+         const values = [ emo_id, emo_data, pac_id, epa_id];
          //execução e obtenção de confirmação da atualização realizada
          const atualizaDados = await db.query(sql, values);
 

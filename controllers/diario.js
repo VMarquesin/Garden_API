@@ -5,7 +5,7 @@ module.exports = {
       try {
          //instruções SQL
          const sql = ` SELECT
-            diario_id, paciente_id, diario_relato, diario_data
+            dia_id, pac_id, dia_relato, dia_data
             FROM diario`;
          //executa instruçoes SQL e armazana o resultado na variável usuários
          const diario = await db.query(sql);
@@ -29,23 +29,23 @@ module.exports = {
    async cadastrarDiario(request, response) {
       try {
          //parametros recebidos no corp da requisição
-         const { diario_id, paciente_id, diario_relato, diario_data } =
+         const {pac_id, dia_relato, dia_data } =
             request.body;
          //instrução SQL
          const sql = `INSERT INTO diario
-            ( diario_id, paciente_id, diario_relato, diario_data)
-            VALUES (?, ?, ?, ?)`;
+            ( pac_id, dia_relato, dia_data)
+            VALUES (?, ?, ?)`;
          //definiçaõ dos dados a serem inseriodos em um array
-         const values = [diario_id, paciente_id, diario_relato, diario_data];
+         const values = [pac_id, dia_relato, dia_data];
          //execução da instrução sql passando os parametros
          const execSql = await db.query(sql, values);
          //identificação do ID do resgistro inserido
-         execSql[0].insertId;
+         const dia_id = execSql[0].insertId;
 
          return response.status(200).json({
             sucesso: true,
             mensagem: "Cadastro do diário efetuado com sucesso.",
-            dados: diario_id,
+            dados: dia_id,
             //menSql: execSql
          });
       } catch (error) {
@@ -59,20 +59,20 @@ module.exports = {
    async editarDiario(request, response) {
       try {
          //parametro recebidos pelo corpo da requisição
-         const { paciente_id, diario_relato, diario_data } = request.body;
+         const { dia_relato, dia_data } = request.body;
          //parametro recebido pela URl via params ex: /usuario/1
-         const { diario_id } = request.params;
+         const { dia_id } = request.params;
          //instruções SQL
-         const sql = `UPDATE diario SET paciente_id = ?, diario_relato = ?,
-         diario_data = ? WHERE diario_id = ?;`;
+         const sql = `UPDATE diario SET dia_relato = ?,
+         dia_data = ? WHERE dia_id = ?;`;
          //preparo do array com dados que serão atualizados
-         const values = [paciente_id, diario_relato, diario_data, diario_id];
+         const values = [dia_relato, dia_data, dia_id];
          //execução e obtenção de confirmação da atualização realizada
          const atualizaDados = await db.query(sql, values);
 
          return response.status(200).json({
             sucesso: true,
-            mensagem: `Diário ${diario_id} atualizado com sucesso!`,
+            mensagem: `Diário ${dia_id} atualizado com sucesso!`,
             dados: atualizaDados[0].affectedRows,
             //mensSql: atualizaDAdos
          });
@@ -87,17 +87,17 @@ module.exports = {
    async apagarDiario(request, response) {
       try {
          //parametro passado via URL na chamada da api pelo front-end
-         const { diario_id } = request.params;
+         const { dia_id } = request.params;
          //comando da exclusão
-         const sql = `DELETE FROM diario WHERE diario_id = ?`;
+         const sql = `DELETE FROM diario WHERE dia_id = ?`;
          //array com parametros da exclusão
-         const values = [diario_id];
+         const values = [dia_id];
          //executa instrução no banco de dados
          const excluir = await db.query(sql, values);
 
          return response.status(200).json({
             sucesso: true,
-            mensagem: `Diário ${diario_id} excluído com sucesso`,
+            mensagem: `Diário ${dia_id} excluído com sucesso`,
             dados: excluir[0].affectedRows,
          });
       } catch (error) {

@@ -5,8 +5,7 @@ module.exports = {
       try {
          //instruções SQL
          const sql = ` SELECT
-            psi_id, psi_endereco
-            , psi_cnpj, usu_id
+            psi_id, psi_endereco, psi_cnpj, usu_id
             FROM psicologo`;
          //executa instruçoes SQL e armazana o resultado na variável usuários
          const psicologo = await db.query(sql);
@@ -30,17 +29,14 @@ module.exports = {
    async cadastrarPsicologo(request, response) {
       try {
          //parametros recebidos no corp da requisição
-         const { psi_endereco
-            , psi_cnpj ,usu_id} =
+         const { psi_endereco, psi_cnpj ,usu_id} =
             request.body;
          //instrução SQL
          const sql = `INSERT INTO psicologo
-            ( psi_endereco
-             , psi_cnpj, usu_id)
+            ( psi_endereco, psi_cnpj, usu_id)
             VALUES (?, ?, ?)`;
          //definiçaõ dos dados a serem inseriodos em um array
-         const values = [psi_id, psi_endereco
-            , psi_cnpj, usu_id];
+         const values = [psi_endereco , psi_cnpj, usu_id];
          //execução da instrução sql passando os parametros
          const execSql = await db.query(sql, values);
          //identificação do ID do resgistro inserido
