@@ -95,7 +95,7 @@ module.exports = {
 
          return response.status(200).json({
             sucesso: true,
-            mensagem: `Atividade ${emo_id} excluída com sucesso`,
+            mensagem: `Atividade ${ati_id} excluída com sucesso`,
             dados: excluir[0].affectedRows,
          });
       } catch (error) {

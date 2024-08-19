@@ -1,7 +1,7 @@
 const db = require("../database/connection");
 
 module.exports = {
-   async listarPsiAnotacao(request, response) {
+   async listarPsi_Anotacao(request, response) {
       try {
          //instruções SQL
          const sql = ` SELECT
@@ -26,7 +26,7 @@ module.exports = {
          });
       }
    },
-   async cadastrarPsiAnotacao(request, response) {
+   async cadastrarPsi_Anotacao(request, response) {
       try {
          //parametros recebidos no corp da requisição
          const { psi_id, pan_anotacao, pan_anotacao_data, pac_id } =
@@ -56,7 +56,7 @@ module.exports = {
          });
       }
    },
-   async editarPsiAnotacao(request, response) {
+   async editarPsi_Anotacao(request, response) {
       try {
          //parametro recebidos pelo corpo da requisição
          const { psi_id, pan_anotacao, pan_anotacao_data, pac_id } =
@@ -64,7 +64,7 @@ module.exports = {
          //parametro recebido pela URl via params ex: /usuario/1
          const { pan_id } = request.params;
          //instruções SQL
-         const sql = `UPDATE psi_anotacao   SET psi_id = ?,
+         const sql = `UPDATE psi_anotacao SET psi_id = ?,
          pan_anotacao  = ?, pan_anotacao_data = ?, pac_id  = ? WHERE pan_id  = ?;`;
          //preparo do array com dados que serão atualizados
          const values = [
@@ -91,7 +91,7 @@ module.exports = {
          });
       }
    },
-   async apagarPsiAnotacao(request, response) {
+   async apagarPsi_Anotacao(request, response) {
       try {
          //parametro passado via URL na chamada da api pelo front-end
          const { pan_id } = request.params;

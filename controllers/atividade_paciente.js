@@ -1,7 +1,7 @@
 const db = require("../database/connection");
 
 module.exports = {
-   async listarAtividadePaciente(request, response) {
+   async listarAtividade_Paciente(request, response) {
       try {
          //instruções SQL
          const sql = ` SELECT
@@ -14,7 +14,7 @@ module.exports = {
 
          return response.status(200).json({
             sucesso: true,
-            mensagem: "Lista de Atividades_Paciente.",
+            mensagem: "Lista de atividades do paciente.",
             dados: atividade_paciente[0],
             nItens,
          });
@@ -26,7 +26,7 @@ module.exports = {
          });
       }
    },
-   async cadastrarAtividadePaciente(request, response) {
+   async cadastrarAtividade_Paciente(request, response) {
       try {
          //parametros recebidos no corp da requisição
          const { ati_id, pac_id } = request.body;
@@ -55,7 +55,7 @@ module.exports = {
          });
       }
    },
-   async editarAtividadePaciente(request, response) {
+   async editarAtividade_Paciente(request, response) {
       try {
          //parametro recebidos pelo corpo da requisição
          const { ati_id, pac_id } = request.body;
@@ -83,7 +83,7 @@ module.exports = {
          });
       }
    },
-   async apagarAtividadePaciente(request, response) {
+   async apagarAtividade_Paciente(request, response) {
       try {
          //parametro passado via URL na chamada da api pelo front-end
          const { apa_id } = request.params;
@@ -96,7 +96,7 @@ module.exports = {
 
          return response.status(200).json({
             sucesso: true,
-            mensagem: `Atividade_Paciente ${emo_id} excluído com sucesso`,
+            mensagem: `Atividade_Paciente ${apa_id} excluído com sucesso`,
             dados: excluir[0].affectedRows,
          });
       } catch (error) {

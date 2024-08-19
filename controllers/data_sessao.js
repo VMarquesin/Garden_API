@@ -1,7 +1,7 @@
 const db = require("../database/connection");
 
 module.exports = {
-   async listarDataSessao(request, response) {
+   async listarData_Sessao(request, response) {
       try {
          //instruções SQL
          const sql = ` SELECT
@@ -26,7 +26,7 @@ module.exports = {
          });
       }
    },
-   async cadastrarDataSessao(request, response) {
+   async cadastrarData_Sessao(request, response) {
       try {
          //parametros recebidos no corp da requisição
          const { psi_id, pac_id, dse_sessao_data } = request.body;
@@ -55,7 +55,7 @@ module.exports = {
          });
       }
    },
-   async editarDataSessao(request, response) {
+   async editarData_Sessao(request, response) {
       try {
          //parametro recebidos pelo corpo da requisição
          const { psi_id, pac_id, dse_sessao_data } = request.body;
@@ -83,7 +83,7 @@ module.exports = {
          });
       }
    },
-   async apagarDataSessao(request, response) {
+   async apagarData_Sessao(request, response) {
       try {
          //parametro passado via URL na chamada da api pelo front-end
          const { dtsec_id } = request.params;

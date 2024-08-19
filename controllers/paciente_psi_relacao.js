@@ -1,12 +1,12 @@
 const db = require("../database/connection");
 
 module.exports = {
-   async listarPpr(request, response) {
+   async listarPaciente_psi_relacao(request, response) {
       try {
          //instruções SQL
          const sql = ` SELECT
          ppr, pac_id , psi_id, ppr_datainicial, ppr_datafinal
-         FROM ppr`;
+         FROM paciente_psi_relacao`;
          //executa instruçoes SQL e armazana o resultado na variável usuários
          const ppr = await db.query(sql);
          //armazana em uma variável o número de resgistro retornados
@@ -26,13 +26,13 @@ module.exports = {
          });
       }
    },
-   async cadastrarPpr(request, response) {
+   async cadastrarPaciente_psi_relacao(request, response) {
       try {
          //parametros recebidos no corp da requisição
          const { pac_id, psi_id, ppr_datainicial, ppr_datafinal } =
             request.body;
          //instrução SQL
-         const sql = `INSERT INTO ppr
+         const sql = `INSERT INTO paciente_psi_relacao 
             (pac_id , psi_id, ppr_datainicial, ppr_datafinal)
             VALUES (?, ?, ?, ?)`;
          //definiçaõ dos dados a serem inseriodos em um array
@@ -56,7 +56,7 @@ module.exports = {
          });
       }
    },
-   async editarPpr(request, response) {
+   async editarPaciente_psi_relacao(request, response) {
       try {
          //parametro recebidos pelo corpo da requisição
          const { pac_id, psi_id, ppr_datainicial, ppr_datafinal } =
@@ -64,7 +64,7 @@ module.exports = {
          //parametro recebido pela URl via params ex: /usuario/1
          const { ppr } = request.params;
          //instruções SQL
-         const sql = `UPDATE ppr SET pac_id = ?, psi_id = ?,
+         const sql = `UPDATE paciente_psi_relacao  SET pac_id = ?, psi_id = ?,
          ppr_datainicial = ?, ppr_datafinal = ? WHERE ppr = ?;`;
          //preparo do array com dados que serão atualizados
          const values = [pac_id, psi_id, ppr_datainicial, ppr_datafinal, ppr];
@@ -85,12 +85,12 @@ module.exports = {
          });
       }
    },
-   async apagarPpr(request, response) {
+   async apagarPaciente_psi_relacao(request, response) {
       try {
          //parametro passado via URL na chamada da api pelo front-end
          const { ppr } = request.params;
          //comando da exclusão
-         const sql = `DELETE FROM ppr WHERE ppr = ?`;
+         const sql = `DELETE FROM paciente_psi_relacao  WHERE ppr = ?`;
          //array com parametros da exclusão
          const values = [ppr];
          //executa instrução no banco de dados

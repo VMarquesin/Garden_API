@@ -1,12 +1,12 @@
 const db = require("../database/connection");
 
 module.exports = {
-   async listarEnderecoUsuario(request, response) {
+   async listarEndereco_Usuario(request, response) {
       try {
          //instruções SQL
          const sql = ` SELECT
             eus_id , bai_id , end_numero, end_complemento, pac_id, psi_id 
-            FROM eus_id`;
+            FROM endereco_usuario`;
          //executa instruçoes SQL e armazana o resultado na variável usuários
          const eus_id = await db.query(sql);
          //armazana em uma variável o número de resgistro retornados
@@ -26,13 +26,13 @@ module.exports = {
          });
       }
    },
-   async cadastrarEnderecoUsuario(request, response) {
+   async cadastrarEndereco_Usuario(request, response) {
       try {
          //parametros recebidos no corp da requisição
          const { bai_id, end_numero, end_complemento, pac_id, psi_id } =
             request.body;
          //instrução SQL
-         const sql = `INSERT INTO eus_id
+         const sql = `INSERT INTO endereco_usuario
             ( bai_id, end_numero, end_complemento, pac_id, psi_id)
             VALUES (?, ?, ?, ?, ?)`;
          //definiçaõ dos dados a serem inseriodos em um array
@@ -56,7 +56,7 @@ module.exports = {
          });
       }
    },
-   async editarEnderecoUsuario(request, response) {
+   async editarEndereco_Usuario(request, response) {
       try {
          //parametro recebidos pelo corpo da requisição
          const { bai_id, end_numero, end_complemento, pac_id, psi_id } =
@@ -64,7 +64,7 @@ module.exports = {
          //parametro recebido pela URl via params ex: /usuario/1
          const { eus_id } = request.params;
          //instruções SQL
-         const sql = `UPDATE eus_id SET bai_id = ?, end_numero = ?, 
+         const sql = `UPDATE endereco_usuario SET bai_id = ?, end_numero = ?, 
          end_complemento = ?, pac_id = ?, psi_id = ?  
          WHERE eus_id = ?;`;
          //preparo do array com dados que serão atualizados
@@ -93,12 +93,12 @@ module.exports = {
          });
       }
    },
-   async apagarEnderecoUsuario(request, response) {
+   async apagarEndereco_Usuario(request, response) {
       try {
          //parametro passado via URL na chamada da api pelo front-end
          const { eus_id } = request.params;
          //comando da exclusão
-         const sql = `DELETE FROM eus_id WHERE endereco_id = ?`;
+         const sql = `DELETE FROM endereco_usuario WHERE eus_id = ?`;
          //array com parametros da exclusão
          const values = [eus_id];
          //executa instrução no banco de dados

@@ -1,7 +1,7 @@
 const db = require("../database/connection");
 
 module.exports = {
-   async listarEmocaoPaciente(request, response) {
+   async listarEmocao_Paciente(request, response) {
       try {
          //instruções SQL
          const sql = ` SELECT
@@ -26,7 +26,7 @@ module.exports = {
          });
       }
    },
-   async cadastrarEmocaoPaciente(request, response) {
+   async cadastrarEmocao_Paciente(request, response) {
       try {
          //parametros recebidos no corp da requisição
          const { emo_id, emo_data, pac_id } = request.body;
@@ -55,7 +55,7 @@ module.exports = {
          });
       }
    },
-   async editarEmocaoPaciente(request, response) {
+   async editarEmocao_Paciente(request, response) {
       try {
          //parametro recebidos pelo corpo da requisição
          const { emo_id, emo_data, pac_id } = request.body;
@@ -83,7 +83,7 @@ module.exports = {
          });
       }
    },
-   async apagarEmocaoPaciente(request, response) {
+   async apagarEmocao_Paciente(request, response) {
       try {
          //parametro passado via URL na chamada da api pelo front-end
          const { epa_id } = request.params;

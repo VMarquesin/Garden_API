@@ -10,7 +10,7 @@ const DiarioController = require("../controllers/diario");
 
 const EmocaoController = require("../controllers/emocao");
 
-const EmocaoPacienteController = require("../controllers/emocao_paciente");
+const Emocao_PacienteController = require("../controllers/emocao_paciente");
 
 const PsicologoController = require("../controllers/psicologo");
 
@@ -18,13 +18,13 @@ const LembreteController = require("../controllers/lembrete");
 
 const AtividadeController = require("../controllers/atividade");
 
-const AtividadePacienteController = require("../controllers/atividade_paciente");
+const Atividade_PacienteController = require("../controllers/atividade_paciente");
 
-const PprController = require("../controllers/ppr");
+const Paciente_psi_relacaoController = require("../controllers/paciente_psi_relacao");
 
 const EnderecoController = require("../controllers/endereco");
 
-const EnderecoUsuarioController = require("../controllers/endereco_usuario");
+const Endereco_UsuarioController = require("../controllers/endereco_usuario");
 
 const Data_sessaoController = require("../controllers/data_sessao");
 
@@ -63,96 +63,109 @@ router.patch("/emocao/:emo_id", EmocaoController.editarEmocao); // condição
 router.delete("/emocao/:emo_id", EmocaoController.apagarEmocao); // condição
 
 //Emoçao Paciente
-router.get("/emocao_paciente", EmocaoPacienteController.listarEmocaoPaciente);
+router.get("/emocao_paciente", Emocao_PacienteController.listarEmocao_Paciente);
 router.post(
    "/emocao_paciente",
-   EmocaoPacienteController.cadastrarEmocaoPaciente
+   Emocao_PacienteController.cadastrarEmocao_Paciente
 );
 router.patch(
    "/emocao_paciente/:epa_id",
-   EmocaoPacienteController.editarEmocaoPaciente
+   Emocao_PacienteController.editarEmocao_Paciente
 ); // condição
 router.delete(
    "/emocao_paciente/:epa_id",
-   EmocaoPacienteController.apagarEmocaoPaciente
+   Emocao_PacienteController.apagarEmocao_Paciente
 ); // condição
 
-// Lembrete    ok
+// Lembrete    PRECISA TESTAR
 router.get("/lembrete", LembreteController.listarLembrete);
 router.post("/lembrete", LembreteController.cadastrarLembrete);
 router.patch("/lembrete/:lem_id", LembreteController.editarLembrete); // condição
 router.delete("/lembrete/:lem_id", LembreteController.apagarLembrete); // condição
 
-//Atividade    ok
+//Atividade    PRECISA TESTAR
 router.get("/atividade", AtividadeController.listarAtividade);
 router.post("/atividade", AtividadeController.cadastrarAtividade);
 router.patch("/atividade/:ati_id", AtividadeController.editarAtividade);
 router.delete("/atividade/:ati_id", AtividadeController.apagarAtividade);
 
-//Atividade_Paciente    ok
+//Atividade_Paciente    PRECISA TESTAR
 router.get(
    "/atividade_paciente",
-   AtividadePacienteController.listarAtividadePaciente
+   Atividade_PacienteController.listarAtividade_Paciente
 );
 router.post(
    "/atividade_paciente",
-   AtividadePacienteController.cadastrarAtividadePaciente
+   Atividade_PacienteController.cadastrarAtividade_Paciente
 );
 router.patch(
    "/atividade_paciente/:apa_id",
-   AtividadePacienteController.editarAtividadePaciente
+   Atividade_PacienteController.editarAtividade_Paciente
 );
 router.delete(
    "/atividade_paciente/:apa_id",
-   AtividadePacienteController.apagarAtividadePaciente
+   Atividade_PacienteController.apagarAtividade_Paciente
 );
 
-//Ppr    ok
-router.get("/ppr", PprController.listarPpr);
-router.post("/ppr", PprController.cadastrarPpr);
-router.patch("/ppr/:ppr", PprController.editarPpr);
-router.delete("/ppr/:ppr", PprController.apagarPpr);
+//Paciente_psi_relacao   PRECISA TESTAR
+router.get(
+   "/paciente_psi_relacao ",
+   Paciente_psi_relacaoController.listarPaciente_psi_relacao
+);
 
-//Endereço     ok
+router.post(
+   "/paciente_psi_relacao ",
+   Paciente_psi_relacaoController.cadastrarPaciente_psi_relacao
+);
+router.patch(
+   "/paciente_psi_relacao /:ppr_id",
+   Paciente_psi_relacaoController.editarPaciente_psi_relacao
+);
+router.delete(
+   "/paciente_psi_relacao /:ppr_id",
+   Paciente_psi_relacaoController.apagarPaciente_psi_relacao
+);
+
+//Endereço     PRECISA TESTAR
 router.get("/endereco", EnderecoController.listarEndereco);
 router.post("/endereco", EnderecoController.cadastrarEndereco);
 router.patch("/endereco/:end_id ", EnderecoController.editarEndereco);
 router.delete("/endereco/:end_id ", EnderecoController.apagarEndereco);
 
-//EndereçoUsuario  // condição ou é paciente ou psicologo      //ok
+//EndereçoUsuario  // condição ou é paciente ou psicologo      //PRECISA TESTAR
 router.get(
    "/endereco_usuario",
-   EnderecoUsuarioController.listarEnderecoUsuario
+   Endereco_UsuarioController.listarEndereco_Usuario
 );
 router.post(
    "/endereco_usuario",
-   EnderecoUsuarioController.cadastrarEnderecoUsuario
+   Endereco_UsuarioController.cadastrarEndereco_Usuario
 );
 router.patch(
-   "/endereco_usuario/:eus_id  ",
-   EnderecoUsuarioController.editarEnderecoUsuario
+   "/endereco_usuario/:eus_id",
+   Endereco_UsuarioController.editarEndereco_Usuario
 );
 router.delete(
-   "/endereco_usuario/:eus_id  ",
-   EnderecoUsuarioController.apagarEnderecoUsuario
+   "/endereco_usuario/:eus_id",
+   Endereco_UsuarioController.apagarEndereco_Usuario
 );
 
-// Data_Sessão    ok
-router.get("/data_sessao", Data_sessaoController.listarDataSessao);
-router.post("/data_sessao", Data_sessaoController.cadastrarDataSessao);
-router.patch("/data_sessao/:dse_id ", Data_sessaoController.editarDataSessao);
-router.delete("/data_sessao/:dse_id ", Data_sessaoController.apagarDataSessao);
+// Data_Sessão    PRECISA TESTAR
+router.get("/data_sessao", Data_sessaoController.listarData_Sessao);
+router.post("/data_sessao", Data_sessaoController.cadastrarData_Sessao);
+router.patch("/data_sessao/:dse_id ", Data_sessaoController.editarData_Sessao);
+router.delete("/data_sessao/:dse_id ", Data_sessaoController.apagarData_Sessao);
 
-// Psi_anotação      ok
-router.get("/psi_anotacao", Psi_anotacaoController.listarPsiAnotacao);
-router.post("/psi_anotacao", Psi_anotacaoController.cadastrarPsiAnotacao);
+// Psi_anotação   PRECISA TESTAR
+router.get("/psi_anotacao", Psi_anotacaoController.listarPsi_Anotacao);
+router.post("/psi_anotacao", Psi_anotacaoController.cadastrarPsi_Anotacao);
 router.patch(
    "/psi_anotacao/:pan_id ",
-   Psi_anotacaoController.editarPsiAnotacao
+   Psi_anotacaoController.editarPsi_Anotacao
 );
 router.delete(
    "psi_anotacao/:pan_id ",
-   Psi_anotacaoController.apagarPsiAnotacao
+   Psi_anotacaoController.apagarPsi_Anotacao
 );
 
 router.get("");
