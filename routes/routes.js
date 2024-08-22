@@ -77,19 +77,19 @@ router.delete(
    Emocao_PacienteController.apagarEmocao_Paciente
 ); // condição
 
-// Lembrete    PRECISA TESTAR
+// Lembrete    ok
 router.get("/lembrete", LembreteController.listarLembrete);
 router.post("/lembrete", LembreteController.cadastrarLembrete);
 router.patch("/lembrete/:lem_id", LembreteController.editarLembrete); // condição
 router.delete("/lembrete/:lem_id", LembreteController.apagarLembrete); // condição
 
-//Atividade    PRECISA TESTAR
+//Atividade    ok
 router.get("/atividade", AtividadeController.listarAtividade);
 router.post("/atividade", AtividadeController.cadastrarAtividade);
 router.patch("/atividade/:ati_id", AtividadeController.editarAtividade);
 router.delete("/atividade/:ati_id", AtividadeController.apagarAtividade);
 
-//Atividade_Paciente    PRECISA TESTAR
+//Atividade_Paciente   ok
 router.get(
    "/atividade_paciente",
    Atividade_PacienteController.listarAtividade_Paciente
@@ -107,22 +107,22 @@ router.delete(
    Atividade_PacienteController.apagarAtividade_Paciente
 );
 
-//Paciente_psi_relacao   PRECISA TESTAR
+//Paciente_psi_relacao  ok
 router.get(
-   "/paciente_psi_relacao ",
+   "/paciente_psi_relacao",
    Paciente_psi_relacaoController.listarPaciente_psi_relacao
 );
 
 router.post(
-   "/paciente_psi_relacao ",
+   "/paciente_psi_relacao",
    Paciente_psi_relacaoController.cadastrarPaciente_psi_relacao
 );
 router.patch(
-   "/paciente_psi_relacao /:ppr_id",
+   "/paciente_psi_relacao/:ppr_id",
    Paciente_psi_relacaoController.editarPaciente_psi_relacao
 );
 router.delete(
-   "/paciente_psi_relacao /:ppr_id",
+   "/paciente_psi_relacao/:ppr_id",
    Paciente_psi_relacaoController.apagarPaciente_psi_relacao
 );
 

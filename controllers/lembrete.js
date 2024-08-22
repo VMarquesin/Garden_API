@@ -35,7 +35,7 @@ module.exports = {
             (lem_psi, lem_data, psi_id, pac_id)
             VALUES (?, ?, ?, ?)`;
          //definiçaõ dos dados a serem inseriodos em um array
-         const values = [lem_id, lem_psi, lem_data, psi_id, pac_id];
+         const values = [lem_psi, lem_data, psi_id, pac_id];
          //execução da instrução sql passando os parametros
          const execSql = await db.query(sql, values);
          //identificação do ID do resgistro inserido
@@ -62,16 +62,16 @@ module.exports = {
          //parametro recebido pela URl via params ex: /usuario/1
          const { lem_id } = request.params;
          //instruções SQL
-         const sql = `UPDATE lembrete SET lem_id = ?, lem_psi = ?,
-         psi_id = ? lem_data = ? pac_id = ? WHERE lem_id = ?;`;
+         const sql = `UPDATE lembrete SET lem_psi = ?, lem_data = ?,
+         psi_id = ?, pac_id = ? WHERE lem_id = ?;`;
          //preparo do array com dados que serão atualizados
-         const values = [lem_psi, lem_data, psi_id, pac_id];
+         const values = [lem_psi, lem_data, psi_id, pac_id, lem_id];
          //execução e obtenção de confirmação da atualização realizada
          const atualizaDados = await db.query(sql, values);
 
          return response.status(200).json({
             sucesso: true,
-            mensagem: `lembrete ${lem_id} atualizado com sucesso!`,
+            mensagem: `Lembrete ${lem_id} atualizado com sucesso!`,
             dados: atualizaDados[0].affectedRows,
             //mensSql: atualizaDAdos
          });
