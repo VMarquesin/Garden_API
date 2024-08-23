@@ -30,6 +30,14 @@ const Data_sessaoController = require("../controllers/data_sessao");
 
 const Psi_anotacaoController = require("../controllers/psi_anotacao");
 
+const BairroController = require("../controllers/bairro");
+
+const PaisController = require("");
+
+const EstadoController = require("");
+
+const CidadeController = require("");
+
 //  usuarios
 router.get("/usuarios", UsuariosController.listarUsuarios);
 router.post("/usuarios", UsuariosController.cadastrarUsuarios);
@@ -150,23 +158,31 @@ router.delete(
    Endereco_UsuarioController.apagarEndereco_Usuario
 );
 
-// Data_Sessão    PRECISA TESTAR
+// Data_Sessão    ok
 router.get("/data_sessao", Data_sessaoController.listarData_Sessao);
 router.post("/data_sessao", Data_sessaoController.cadastrarData_Sessao);
-router.patch("/data_sessao/:dse_id ", Data_sessaoController.editarData_Sessao);
-router.delete("/data_sessao/:dse_id ", Data_sessaoController.apagarData_Sessao);
+router.patch("/data_sessao/:dse_id", Data_sessaoController.editarData_Sessao);
+router.delete("/data_sessao/:dse_id", Data_sessaoController.apagarData_Sessao);
 
-// Psi_anotação   PRECISA TESTAR
+// Psi_anotação   ok
 router.get("/psi_anotacao", Psi_anotacaoController.listarPsi_Anotacao);
 router.post("/psi_anotacao", Psi_anotacaoController.cadastrarPsi_Anotacao);
-router.patch(
-   "/psi_anotacao/:pan_id ",
-   Psi_anotacaoController.editarPsi_Anotacao
-);
-router.delete(
-   "psi_anotacao/:pan_id ",
-   Psi_anotacaoController.apagarPsi_Anotacao
-);
+router.patch("/psi_anotacao/:pan_id",Psi_anotacaoController.editarPsi_Anotacao);
+router.delete("/psi_anotacao/:pan_id",Psi_anotacaoController.apagarPsi_Anotacao);
+
+router.get("/bairro", BairroController.listarBairro);
+router.post("/bairro", BairroController.cadastrarBairro);
+router.patch("/bairro/:bai_id",BairroController.editarBairro);
+router.delete("/bairro/:bai_id",BairroController.apagarBairro);
+
+router.get("/pais", PaisController.listarPais);
+router.post("/pais", PaisController.cadastrarPais);
+
+router.get("/estado", EstadoController.listarEstado);
+router.post("/estado", EstadoController.cadastrarEstado);
+
+router.get("/cidade", CidadeController.listarCidade);
+router.post("/cidade", CidadeController.cadastrarCidade);
 
 router.get("");
 module.exports = router;

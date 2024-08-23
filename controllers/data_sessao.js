@@ -26,34 +26,7 @@ module.exports = {
          });
       }
    },
-   async editarData_Sessao(request, response) {
-      try {
-         //parametro recebidos pelo corpo da requisição
-         const { psi_id, pac_id, dse_sessao_data } = request.body;
-         //parametro recebido pela URl via params ex: /usuario/1
-         const { dse_id } = request.params;
-         //instruções SQL
-         const sql = `UPDATE data_sessao SET psi_id = ?, pac_id = ?,
-         dse_sessao_data = ? WHERE dse_id = ?`;
-         //preparo do array com dados que serão atualizados
-         const values = [psi_id, pac_id, dse_sessao_data, dse_id];
-         //execução e obtenção de confirmação da atualização realizada
-         const atualizaDados = await db.query(sql, values);
-
-         return response.status(200).json({
-            sucesso: true,
-            mensagem: `Data da sessão ${dse_id} atualizado com sucesso!`,
-            dados: atualizaDados[0].affectedRows,
-            //mensSql: atualizaDAdos
-         });
-      } catch (error) {
-         return response.status(500).json({
-            sucesso: false,
-            mensagem: "Erro na requisição.",
-            dados: error.message,
-         });
-      }
-   },
+  
    async cadastrarData_Sessao(request, response) {
       try {
          //parametros recebidos no corp da requisição
@@ -83,7 +56,34 @@ module.exports = {
          });
       }
    },
-   
+   async editarData_Sessao(request, response) {
+      try {
+         //parametro recebidos pelo corpo da requisição
+         const { psi_id, pac_id, dse_sessao_data } = request.body;
+         //parametro recebido pela URl via params ex: /usuario/1
+         const { dse_id } = request.params;
+         //instruções SQL
+         const sql = `UPDATE data_sessao SET psi_id = ?, pac_id = ?,
+         dse_sessao_data = ? WHERE dse_id = ?`;
+         //preparo do array com dados que serão atualizados
+         const values = [psi_id, pac_id, dse_sessao_data, dse_id];
+         //execução e obtenção de confirmação da atualização realizada
+         const atualizaDados = await db.query(sql, values);
+
+         return response.status(200).json({
+            sucesso: true,
+            mensagem: `Data da sessão ${dse_id} atualizado com sucesso!`,
+            dados: atualizaDados[0].affectedRows,
+            //mensSql: atualizaDAdos
+         });
+      } catch (error) {
+         return response.status(500).json({
+            sucesso: false,
+            mensagem: "Erro na requisição.",
+            dados: error.message,
+         });
+      }
+   },
    async apagarData_Sessao(request, response) {
       try {
          //parametro passado via URL na chamada da api pelo front-end
