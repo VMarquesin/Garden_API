@@ -167,27 +167,36 @@ router.delete("/data_sessao/:dse_id", Data_sessaoController.apagarData_Sessao);
 // Psi_anotação   ok
 router.get("/psi_anotacao", Psi_anotacaoController.listarPsi_Anotacao);
 router.post("/psi_anotacao", Psi_anotacaoController.cadastrarPsi_Anotacao);
-router.patch("/psi_anotacao/:pan_id",Psi_anotacaoController.editarPsi_Anotacao);
-router.delete("/psi_anotacao/:pan_id",Psi_anotacaoController.apagarPsi_Anotacao);
+router.patch(
+   "/psi_anotacao/:pan_id",
+   Psi_anotacaoController.editarPsi_Anotacao
+);
+router.delete(
+   "/psi_anotacao/:pan_id",
+   Psi_anotacaoController.apagarPsi_Anotacao
+);
 
+//bairro das cidades   ok
 router.get("/bairro", BairroController.listarBairro);
 router.post("/bairro", BairroController.cadastrarBairro);
-router.patch("/bairro/:bai_id",BairroController.editarBairro);
-router.delete("/bairro/:bai_id",BairroController.apagarBairro);
+router.patch("/bairro/:bai_id", BairroController.editarBairro);
+router.delete("/bairro/:bai_id", BairroController.apagarBairro);
 
 router.get("/pais", PaisController.listarPais);
 router.post("/pais", PaisController.cadastrarPais);
+router.patch("/pais/:pas_id", PaisController.editarPais);
+router.delete("/pais/:pas_id", PaisController.apagarPais);
 
 router.get("/estado", EstadoController.listarEstado);
 router.post("/estado", EstadoController.cadastrarEstado);
-
+router.patch("/estado/:est_id", EstadoController.editarEstado);
+router.delete("/estado/:est_id", EstadoController.apagarEstado);
 
 //apagar cidade 55555
 router.get("/cidade", CidadeController.listarCidade);
 router.post("/cidade", CidadeController.cadastrarCidade);
-
-
-
+router.patch("/cidade/:cid_id", CidadeController.editarCidade);
+router.delete("/cidade/:cid_id", CidadeController.apagarCidade);
 
 router.get("");
 module.exports = router;
