@@ -32,11 +32,11 @@ const Psi_anotacaoController = require("../controllers/psi_anotacao");
 
 const BairroController = require("../controllers/bairro");
 
-const PaisController = require("");
+const PaisController = require("../controllers/pais");
 
-const EstadoController = require("");
+const EstadoController = require("../controllers/estado");
 
-const CidadeController = require("");
+const CidadeController = require("../controllers/cidade");
 
 //  usuarios
 router.get("/usuarios", UsuariosController.listarUsuarios);
@@ -181,8 +181,13 @@ router.post("/pais", PaisController.cadastrarPais);
 router.get("/estado", EstadoController.listarEstado);
 router.post("/estado", EstadoController.cadastrarEstado);
 
+
+//apagar cidade 55555
 router.get("/cidade", CidadeController.listarCidade);
 router.post("/cidade", CidadeController.cadastrarCidade);
+
+
+
 
 router.get("");
 module.exports = router;
