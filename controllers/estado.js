@@ -29,7 +29,7 @@ module.exports = {
    async cadastrarEstado(request, response) {
       try {
          //parametros recebidos no corp da requisição
-         const { est_nome, est_uf, est_ibge, est_ddd } = request.body;
+         const { est_id, est_nome, est_uf, est_ibge, est_ddd } = request.body;
          //instrução SQL
          const sql = `INSERT INTO estado 
             (est_id, est_nome , est_uf , est_ibge , est_ddd )

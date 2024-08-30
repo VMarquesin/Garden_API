@@ -63,7 +63,7 @@ module.exports = {
          const { cid_id } = request.params;
          //instruções SQL
          const sql = `UPDATE cidade SET cid_nome = ?, cid_uf = ?,
-         cid_ibge = ?, pac_id = ? WHERE cid_id = ?;`;
+         cid_ibge = ? WHERE cid_id = ?;`;
          //preparo do array com dados que serão atualizados
          const values = [cid_nome, cid_uf, cid_ibge, cid_id];
          //execução e obtenção de confirmação da atualização realizada
