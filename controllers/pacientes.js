@@ -137,12 +137,6 @@ module.exports = {
          //executa instrução no banco de dados
          const excluir = await db.query(sql, values);
 
-         // if (result.affectedRows === 0) {
-         //    return response.status(404).json({
-         //       sucesso: false,
-         //       mensagem: `Paciente com ID ${pac_id} não encontrado.`,
-         //    });
-         //}
          return response.status(200).json({
             sucesso: true,
             mensagem: `Paciente ${pac_id} excluído com sucesso`,
@@ -156,60 +150,4 @@ module.exports = {
          });
       }
    },
-   // async ocultarUsuario(request, response) {
-   //    try {
-   //       const usu_ativo = false;
-   //       const { usu_id } = request.params;
-   //       const sql = `UPDATE paciente SET pac_status = ?
-   //             FROM paciente
-   //             WHERE usu_id = ?;`;
-   //       const values = [usu_ativo.usu_id];
-   //       const atualizacao = await db.query(sql, values);
-
-   //       return response.status(200).json({
-   //          sucesso: true,
-   //          mensagem: `Usuário ${usu_id} excluído com sucesso`,
-   //          dados: atualizacao[0].affectedRows,
-   //       });
-   //    } catch (error) {
-   //       return response.status(500).json({
-   //          sucesso: false,
-   //          mensagem: "Erro na requisição.",
-   //          dados: error.message,
-   //       });
-   //    }
-   // },
-   // async login(request, response) {
-   //    try {
-   //       const { usu_email, usu_senha } = request.body;
-
-   //       const sql = `SELECT usu_id, usu_nome, usu_adm FROM usuarios
-   //              WHERE usu_email = ? AND usu_senha = ?;`;
-
-   //       const values = [usu_email, usu_senha];
-
-   //       const usuarios = await db.query(sql, values);
-   //       const nItens = usuarios[0].length;
-
-   //       if (nItens < 1) {
-   //          return response.status(403).json({
-   //             sucesso: false,
-   //             mensagem: "Login e/ou senha inválido.",
-   //             dados: null,
-   //          });
-   //       }
-
-   //       return response.status(200).json({
-   //          sucesso: true,
-   //          mensagem: "Login efetuado com sucesso",
-   //          dados: usuarios[0],
-   //       });
-   //    } catch (error) {
-   //       return response.status(500).json({
-   //          sucesso: false,
-   //          mensagem: "Erro na requisição.",
-   //          dados: error.message,
-   //       });
-   //    }
-   // },
 };
