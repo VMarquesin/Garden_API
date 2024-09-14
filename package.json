@@ -25,6 +25,7 @@
   "homepage": "https://github.com/ewertonjsilva/api_nodejs_2des_a_2sem_24#readme",
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "mysql2": "^3.9.2"
   },
