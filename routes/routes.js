@@ -47,7 +47,7 @@ router.post("/usuarios/login", UsuariosController.login);
 // router.delete('/usuarios/del/:usu_id', UsuariosController.ocultarUsuario);
 
 // paciente
-router.get("/paciente", PacienteController.listaPacientes);
+router.get("/paciente/:pac_id", PacienteController.listaPacientes);
 router.post("/paciente", PacienteController.cadastrarPacientes);
 router.patch("/paciente/:pac_id", PacienteController.editarPacientes); //condição paci não existente
 router.delete("/paciente/:pac_id", PacienteController.apagarPacientes); //condição paci não existente
@@ -59,10 +59,10 @@ router.patch("/psicologo/:psi_id", PsicologoController.editarPsicologo); // cond
 router.delete("/psicologo/:psi_id", PsicologoController.apagarPsicologo); // condição psi não encontrado
 
 // diario
-router.get("/diario", DiarioController.listarDiario);
+router.get("/diario/:pac_id", DiarioController.listarDiario);
 router.post("/diario", DiarioController.cadastrarDiario);
 router.patch("/diario/:dia_id", DiarioController.editarDiario); // condição
-router.delete("/diario/:dia_id", DiarioController.apagarDiario); // condição
+router.delete("/diario/:dia_id", DiarioController.apagarDiario);  // condição
 
 // emocao
 router.get("/emocao", EmocaoController.listarEmocao);

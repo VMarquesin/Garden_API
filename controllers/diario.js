@@ -4,11 +4,16 @@ module.exports = {
    async listarDiario(request, response) {
       try {
          //instruções SQL
+         
+         const { pac_id } = request.params;
          const sql = ` SELECT
             dia_id, pac_id, dia_relato, dia_data
-            FROM diario`;
+            FROM diario
+            WHERE pac_id = ?`;
+
+         const values = [pac_id];
          //executa instruçoes SQL e armazana o resultado na variável usuários
-         const diario = await db.query(sql);
+         const diario = await db.query(sql, values);
          //armazana em uma variável o número de resgistro retornados
          const nItens = diario[0].length;
 
@@ -41,6 +46,9 @@ module.exports = {
          const execSql = await db.query(sql, values);
          //identificação do ID do resgistro inserido
          const dia_id = execSql[0].insertId;
+
+
+
 
          return response.status(200).json({
             sucesso: true,
