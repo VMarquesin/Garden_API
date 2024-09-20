@@ -6,6 +6,7 @@ module.exports = {
          //instruções SQL
          
          const { pac_id } = request.params;
+         
          const sql = ` SELECT
             dia_id, pac_id, dia_relato, dia_data
             FROM diario

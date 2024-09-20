@@ -4,7 +4,7 @@ module.exports = {
    async listaPacientes(request, response) {
       try {
          //instruções SQL
-         const { pac_id } = request.params;
+         // const { pac_id } = request.params;
 
          const sql = ` SELECT
          pac_id,  pac_telefone, pac_cpf, pac_filho,  pac_escolaridade,
@@ -12,9 +12,11 @@ module.exports = {
          FROM paciente
          WHERE pac_status = 1;`;
 
-         const values = [pac_id];
+      //   WHERE pac_id = ?
+
+         // const values = [pac_id];
          //executa instruçoes SQL e armazana o resultado na variável usuários
-         const paciente = await db.query(sql, values);
+         const paciente = await db.query(sql); //, values
          //armazana em uma variável o número de resgistro retornados
          const nItens = paciente[0].length;
 
