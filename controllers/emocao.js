@@ -29,11 +29,10 @@ module.exports = {
    async cadastrarEmocao(request, response) {
       try {
          //parametros recebidos no corp da requisição
-         const { emo_descricao} =
-            request.body;
+         const { emo_descricao } = request.body;
          //instrução SQL
          const sql = `INSERT INTO emocao
-            ( emo_descricao)
+            (emo_descricao)
             VALUES (?)`;
          //definiçaõ dos dados a serem inseriodos em um array
          const values = [emo_descricao];
@@ -57,54 +56,54 @@ module.exports = {
       }
    },
    async editarEmocao(request, response) {
-    try {
-       //parametro recebidos pelo corpo da requisição
-       const { emo_descricao } = request.body;
-       //parametro recebido pela URl via params ex: /usuario/1
-       const { emo_id } = request.params;
-       //instruções SQL
-       const sql = `UPDATE emocao SET emo_descricao = ? WHERE emo_id = ?;`;
-       //preparo do array com dados que serão atualizados
-       const values = [emo_descricao, emo_id];
-       //execução e obtenção de confirmação da atualização realizada
-       const atualizaDados = await db.query(sql, values);
+      try {
+         //parametro recebidos pelo corpo da requisição
+         const { emo_descricao } = request.body;
+         //parametro recebido pela URl via params ex: /usuario/1
+         const { emo_id } = request.params;
+         //instruções SQL
+         const sql = `UPDATE emocao SET emo_descricao = ? WHERE emo_id = ?;`;
+         //preparo do array com dados que serão atualizados
+         const values = [emo_descricao, emo_id];
+         //execução e obtenção de confirmação da atualização realizada
+         const atualizaDados = await db.query(sql, values);
 
-       return response.status(200).json({
-          sucesso: true,
-          mensagem: `Emoção ${emo_id} atualizada com sucesso!`,
-          dados: atualizaDados[0].affectedRows,
-          //mensSql: atualizaDAdos
-       });
-    } catch (error) {
-       return response.status(500).json({
-          sucesso: false,
-          mensagem: "Erro na requisição.",
-          dados: error.message,
-       });
-    }
- },
- async apagarEmocao(request, response) {
-    try {
-       //parametro passado via URL na chamada da api pelo front-end
-       const { emo_id } = request.params;
-       //comando da exclusão
-       const sql = `DELETE FROM emocao WHERE emo_id = ?`;
-       //array com parametros da exclusão
-       const values = [emo_id];
-       //executa instrução no banco de dados
-       const excluir = await db.query(sql, values);
+         return response.status(200).json({
+            sucesso: true,
+            mensagem: `Emoção ${emo_id} atualizada com sucesso!`,
+            dados: atualizaDados[0].affectedRows,
+            //mensSql: atualizaDAdos
+         });
+      } catch (error) {
+         return response.status(500).json({
+            sucesso: false,
+            mensagem: "Erro na requisição.",
+            dados: error.message,
+         });
+      }
+   },
+   async apagarEmocao(request, response) {
+      try {
+         //parametro passado via URL na chamada da api pelo front-end
+         const { emo_id } = request.params;
+         //comando da exclusão
+         const sql = `DELETE FROM emocao WHERE emo_id = ?`;
+         //array com parametros da exclusão
+         const values = [emo_id];
+         //executa instrução no banco de dados
+         const excluir = await db.query(sql, values);
 
-       return response.status(200).json({
-          sucesso: true,
-          mensagem: `Emoção ${emo_id} excluída com sucesso`,
-          dados: excluir[0].affectedRows,
-       });
-    } catch (error) {
-       return response.status(500).json({
-          sucesso: false,
-          mensagem: "Erro na requisição.",
-          dados: error.message,
-       });
-    }
- },
+         return response.status(200).json({
+            sucesso: true,
+            mensagem: `Emoção ${emo_id} excluída com sucesso`,
+            dados: excluir[0].affectedRows,
+         });
+      } catch (error) {
+         return response.status(500).json({
+            sucesso: false,
+            mensagem: "Erro na requisição.",
+            dados: error.message,
+         });
+      }
+   },
 };
