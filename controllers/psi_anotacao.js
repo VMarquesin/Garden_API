@@ -26,6 +26,49 @@ module.exports = {
          });
       }
    },
+
+   async listarPsi_AnotacaoPorId(request, response) {
+      try {
+         // Obtém o ID do paciente dos parâmetros da requisição
+         const { pac_id } = request.query;
+   
+         // Verifica se o ID do paciente foi fornecido
+         if (!pac_id) {
+            return response.status(400).json({
+               sucesso: false,
+               mensagem: "O ID do paciente (pac_id) é obrigatório.",
+            });
+         }
+   
+         // Instrução SQL para selecionar as anotações pelo ID do paciente
+         const sql = `SELECT pan_id, psi_id, pan_anotacao, pan_anotacao_data, pac_id 
+                      FROM psi_anotacao 
+                      WHERE pac_id = ${db.escape(pac_id)}`;
+   
+         // Executa a query SQL
+         const psi_anotacao = await db.query(sql);
+   
+         // Número de registros retornados
+         const nItens = psi_anotacao[0].length;
+   
+         return response.status(200).json({
+            sucesso: true,
+            mensagem: `Lista de anotações do paciente com ID ${pac_id}.`,
+            dados: psi_anotacao[0],
+            nItens,
+         });
+      } catch (error) {
+         return response.status(500).json({
+            sucesso: false,
+            mensagem: "Erro na requisição.",
+            dados: error.message,
+         });
+      }
+   },
+   
+
+
+
    async cadastrarPsi_Anotacao(request, response) {
       try {
          //parametros recebidos no corp da requisição
