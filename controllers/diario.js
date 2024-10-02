@@ -20,7 +20,7 @@ module.exports = {
 
          return response.status(200).json({
             sucesso: true,
-            mensagem: "Lista de diários.",
+            mensagem: `Lista de diários do paciente ID ${pac_id}.`,
             dados: diario[0],
             nItens,
          });

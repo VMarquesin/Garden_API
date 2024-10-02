@@ -167,8 +167,8 @@ router.patch("/data_sessao/:dse_id", Data_sessaoController.editarData_Sessao);
 router.delete("/data_sessao/:dse_id", Data_sessaoController.apagarData_Sessao);
 
 // Psi_anotação   ok
-router.get("/psi_anotacao", Psi_anotacaoController.listarPsi_Anotacao);
-router.get("/psi_anotacao/:pac_id", Psi_anotacaoController.listarPsi_AnotacaoPorId);
+// router.get("/psi_anotacao", Psi_anotacaoController.listarPsi_Anotacao);
+router.get("/psi_anotacao/:pac_id", Psi_anotacaoController.listarPsi_Anotacao);
 router.post("/psi_anotacao", Psi_anotacaoController.cadastrarPsi_Anotacao);
 router.patch(
    "/psi_anotacao/:pan_id",

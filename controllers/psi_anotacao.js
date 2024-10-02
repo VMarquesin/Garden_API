@@ -1,36 +1,36 @@
 const db = require("../database/connection");
 
 module.exports = {
+   // async listarPsi_Anotacao(request, response) {
+   //    try {
+   //       //instruções SQL
+   //       const sql = `SELECT
+   //          pan_id , psi_id, pan_anotacao , pan_anotacao_data, pac_id
+   //          FROM psi_anotacao`;
+   //       //executa instruçoes SQL e armazana o resultado na variável usuários
+   //       const psi_anotacao = await db.query(sql);
+   //       //armazana em uma variável o número de resgistro retornados
+   //       const nItens = psi_anotacao[0].length;
+
+   //       return response.status(200).json({
+   //          sucesso: true,
+   //          mensagem: "Lista de anotações do psicologo.",
+   //          dados: psi_anotacao[0],
+   //          nItens,
+   //       });
+   //    } catch (error) {
+   //       return response.status(500).json({
+   //          suceso: false,
+   //          mensagem: "Erro na requisição.",
+   //          dados: error.message,
+   //       });
+   //    }
+   // },
+
    async listarPsi_Anotacao(request, response) {
       try {
-         //instruções SQL
-         const sql = `SELECT
-            pan_id , psi_id, pan_anotacao , pan_anotacao_data, pac_id
-            FROM psi_anotacao`;
-         //executa instruçoes SQL e armazana o resultado na variável usuários
-         const psi_anotacao = await db.query(sql);
-         //armazana em uma variável o número de resgistro retornados
-         const nItens = psi_anotacao[0].length;
-
-         return response.status(200).json({
-            sucesso: true,
-            mensagem: "Lista de anotações do psicologo.",
-            dados: psi_anotacao[0],
-            nItens,
-         });
-      } catch (error) {
-         return response.status(500).json({
-            suceso: false,
-            mensagem: "Erro na requisição.",
-            dados: error.message,
-         });
-      }
-   },
-
-   async listarPsi_AnotacaoPorId(request, response) {
-      try {
          // Obtém o ID do paciente dos parâmetros da requisição
-         const { pac_id } = request.query;
+         const { pac_id } = request.params;
    
          // Verifica se o ID do paciente foi fornecido
          if (!pac_id) {
@@ -43,10 +43,12 @@ module.exports = {
          // Instrução SQL para selecionar as anotações pelo ID do paciente
          const sql = `SELECT pan_id, psi_id, pan_anotacao, pan_anotacao_data, pac_id 
                       FROM psi_anotacao 
-                      WHERE pac_id = ${db.escape(pac_id)}`;
+                      WHERE pac_id = ?`;
    
          // Executa a query SQL
-         const psi_anotacao = await db.query(sql);
+         const values = [pac_id];
+
+         const psi_anotacao = await db.query(sql, values);
    
          // Número de registros retornados
          const nItens = psi_anotacao[0].length;
