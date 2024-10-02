@@ -35,8 +35,10 @@ module.exports = {
    async cadastrarDiario(request, response) {
       try {
          //parametros recebidos no corp da requisição
-         const {pac_id, dia_relato, dia_data } =
+         const {pac_id, dia_relato } =
             request.body;
+
+         const dia_data = new Date();
          //instrução SQL
          const sql = `INSERT INTO diario
             ( pac_id, dia_relato, dia_data)
