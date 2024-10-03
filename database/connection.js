@@ -1,20 +1,20 @@
 const mysql = require('mysql2/promise');
 
-const bd_usuario = 'us_tecdes_223_g6'; //usuario
-const bd_senha = 'ah7372'; //senha
-const bd_servidor = '10.67.22.216'; //servidor
-const bd_porta = '3306';  //porta
-const bd_banco = 'bd_tcc_tecdes_223_g6';  //nome do banco
+const bd_usuario = 'us_tecdes_223_g6'; 
+const bd_senha = 'ah7372'; 
+const bd_servidor = '10.67.22.216'; 
+const bd_porta = '3306'; 
+const bd_banco = 'bd_tcc_tecdes_223_g6'; 
 let connection;
 
 const config = {
     host: bd_servidor,
-    port: bd_porta,  //default: 3306
+    port: bd_porta,  
     user: bd_usuario,
     password: bd_senha,
     database: bd_banco,
     waitForConnections : true,
-    connectionLimit : 10, //default : 10 - deixar 100 ou 1000
+    connectionLimit : 10, 
     queueLimit : 0,
 }
 
