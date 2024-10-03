@@ -35,8 +35,7 @@ module.exports = {
    async cadastrarDiario(request, response) {
       try {
          //parametros recebidos no corp da requisição
-         const {pac_id, dia_relato } =
-            request.body;
+         const {pac_id, dia_relato } = request.body;
 
          const dia_data = new Date();
          //instrução SQL
@@ -49,9 +48,6 @@ module.exports = {
          const execSql = await db.query(sql, values);
          //identificação do ID do resgistro inserido
          const dia_id = execSql[0].insertId;
-
-
-
 
          return response.status(200).json({
             sucesso: true,
