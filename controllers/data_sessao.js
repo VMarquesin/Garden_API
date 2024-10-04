@@ -26,11 +26,19 @@ module.exports = {
          });
       }
    },
-  
+
    async cadastrarData_Sessao(request, response) {
       try {
+         console.log(request.body);
          //parametros recebidos no corp da requisição
          const { psi_id, pac_id, dse_sessao_data } = request.body;
+
+         // if (!dse_sessao_data) {
+         //    return response.status(400).json({
+         //       sucesso: false,
+         //       mensagem: "Data da sessão é obrigatória.",
+         //    });
+         // }
          //instrução SQL
          const sql = `INSERT INTO data_sessao 
             ( psi_id, pac_id, dse_sessao_data)
@@ -40,12 +48,12 @@ module.exports = {
          //execução da instrução sql passando os parametros
          const execSql = await db.query(sql, values);
          //identificação do ID do resgistro inserido
-         const  dse_id = execSql[0].insertId;
+         const dse_id = execSql[0].insertId;
 
          return response.status(200).json({
             sucesso: true,
             mensagem: "Cadastro de data da sessão efetuado com sucesso.",
-            dados:  dse_id,
+            dados: dse_id,
             //menSql: execSql
          });
       } catch (error) {
@@ -87,17 +95,18 @@ module.exports = {
    async apagarData_Sessao(request, response) {
       try {
          //parametro passado via URL na chamada da api pelo front-end
-         const {  dse_id } = request.params;
+         const { dse_id } = request.params;
+         console.log("ID a ser excluído:", dse_id);
          //comando da exclusão
          const sql = `DELETE FROM data_sessao WHERE  dse_id = ?`;
          //array com parametros da exclusão
-         const values = [ dse_id];
+         const values = [dse_id];
          //executa instrução no banco de dados
          const excluir = await db.query(sql, values);
 
          return response.status(200).json({
             sucesso: true,
-            mensagem: `Data da sessão ${ dse_id} excluída com sucesso`,
+            mensagem: `Data da sessão ${dse_id} excluída com sucesso`,
             dados: excluir[0].affectedRows,
          });
       } catch (error) {
