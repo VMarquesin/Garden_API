@@ -39,7 +39,7 @@ const EstadoController = require("../controllers/estado");
 const CidadeController = require("../controllers/cidade");
 
 //  usuarios
-router.get("/usuarios", UsuariosController.listarUsuarios);
+router.get("/usuarios/:usu_id", UsuariosController.listarUsuarios);
 router.post("/usuarios", UsuariosController.cadastrarUsuarios);
 router.patch("/usuarios/:usu_id", UsuariosController.editarUsuarios); //condição para usu não existente
 router.delete("/usuarios/:usu_id", UsuariosController.apagarUsuarios); //condição para usu não existente
@@ -55,7 +55,9 @@ router.patch("/paciente/:pac_id", PacienteController.editarPacientes); //condiç
 router.delete("/paciente/:pac_id", PacienteController.apagarPacientes); //condição paci não existente
 
 //psicologo
-router.get("/psicologo", PsicologoController.listarPsicologo);
+router.get("/psicologo/:psi_id", PsicologoController.listarPsicologo);
+
+// router.get("/psicologo", PsicologoController.listarPsicologo);
 router.post("/psicologo", PsicologoController.cadastrarPsicologo);
 router.patch("/psicologo/:psi_id", PsicologoController.editarPsicologo); // condição psi não encontrado
 router.delete("/psicologo/:psi_id", PsicologoController.apagarPsicologo); // condição psi não encontrado
