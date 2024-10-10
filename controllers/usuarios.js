@@ -1,7 +1,7 @@
 const db = require("../database/connection");
 
 module.exports = {
-   async listarUsuarios(request, response) {
+   async listarUsuario(request, response) {
       try {
          const { usu_id } = request.params;
          //instruções SQL
@@ -30,6 +30,34 @@ module.exports = {
          });
       }
    },
+
+   async listarUsuarios(request, response) {
+      try {
+         //instruções SQL
+         const sql = ` SELECT
+            usu_id, usu_nome, usu_nick, usu_email, usu_senha, usu_adm
+            FROM usuarios`;
+
+         //executa instruçoes SQL e armazana o resultado na variável usuários
+         const usuarios = await db.query(sql);
+         //armazana em uma variável o número de resgistro retornados
+         const nItens = usuarios[0].length;
+
+         return response.status(200).json({
+            sucesso: true,
+            mensagem: "Lista de usuário.",
+            dados: usuarios[0],
+            nItens,
+         });
+      } catch (error) {
+         return response.status(500).json({
+            suceso: false,
+            mensagem: "Erro na requisição.",
+            dados: error.message,
+         });
+      }
+   },
+
    async cadastrarUsuarios(request, response) {
       try {
          //parametros recebidos no corp da requisição

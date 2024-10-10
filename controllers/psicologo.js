@@ -31,31 +31,32 @@ module.exports = {
       }
    },
 
-   // async listarPsicologo(request, response) {
-   //    try {
-   //       //instruções SQL
-   //       const sql = ` SELECT
-   //          psi_id, psi_endereco, psi_cnpj, usu_id
-   //          FROM psicologo`;
-   //       //executa instruçoes SQL e armazana o resultado na variável usuários
-   //       const psicologo = await db.query(sql);
-   //       //armazana em uma variável o número de resgistro retornados
-   //       const nItens = psicologo[0].length;
+   async listarPsicologos(request, response) {
+      try {
+         //instruções SQL
+         const sql = ` SELECT
+            psi_id, psi_endereco, psi_cnpj, usu_id
+            FROM psicologo`;
+         //executa instruçoes SQL e armazana o resultado na variável usuários
+         const psicologo = await db.query(sql);
+         //armazana em uma variável o número de resgistro retornados
+         const nItens = psicologo[0].length;
 
-   //       return response.status(200).json({
-   //          sucesso: true,
-   //          mensagem: "Lista de Psicologos.",
-   //          dados: psicologo[0],
-   //          nItens,
-   //       });
-   //    } catch (error) {
-   //       return response.status(500).json({
-   //          suceso: false,
-   //          mensagem: "Erro na requisição.",
-   //          dados: error.message,
-   //       });
-   //    }
-   // },
+         return response.status(200).json({
+            sucesso: true,
+            mensagem: "Lista de Psicologos.",
+            dados: psicologo[0],
+            nItens,
+         });
+      } catch (error) {
+         return response.status(500).json({
+            suceso: false,
+            mensagem: "Erro na requisição.",
+            dados: error.message,
+         });
+      }
+   },
+
    async cadastrarPsicologo(request, response) {
       try {
          //parametros recebidos no corp da requisição
