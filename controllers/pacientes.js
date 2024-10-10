@@ -1,22 +1,22 @@
 const db = require("../database/connection");
 
 module.exports = {
-   async listaPacientes(request, response) {
+
+
+   async listaPaciente(request, response) {
       try {
-         //instruções SQL
-         // const { pac_id } = request.params;
+         const { pac_id } = request.params;
 
          const sql = ` SELECT
-         pac_id,  pac_telefone, pac_cpf, pac_filho,  pac_escolaridade,
+         pac_telefone, pac_cpf, pac_filho,  pac_escolaridade,
          pac_data_nasc,  pac_trabalho, pac_estado_civil, usu_id, pac_status = 1 AS pac_status
          FROM paciente
-         WHERE pac_status = 1;`;
+         WHERE pac_status = 1
+         and pac_id = ?;`;
 
-      //   WHERE pac_id = ?
-
-         // const values = [pac_id];
+         const values = [pac_id];
          //executa instruçoes SQL e armazana o resultado na variável usuários
-         const paciente = await db.query(sql); //, values
+         const paciente = await db.query(sql, values); //, values
          //armazana em uma variável o número de resgistro retornados
          const nItens = paciente[0].length;
 
@@ -34,6 +34,77 @@ module.exports = {
          });
       }
    },
+
+   async listaPacientes(request, response) {
+      try {
+         //instruções SQL
+
+         const sql = ` SELECT
+         pac_id,  pac_telefone, pac_cpf, pac_filho,  pac_escolaridade,
+         pac_data_nasc,  pac_trabalho, pac_estado_civil, usu_id, pac_status = 1 AS pac_status
+         FROM paciente
+         WHERE pac_status = 1;`;        
+
+         //executa instruçoes SQL e armazana o resultado na variável usuários
+         const paciente = await db.query(sql); 
+         //armazana em uma variável o número de resgistro retornados
+         const nItens = paciente[0].length;
+
+         return response.status(200).json({
+            sucesso: true,
+            mensagem: "Lista de paciente.",
+            dados: paciente[0],
+            nItens,
+         });
+      } catch (error) {
+         return response.status(500).json({
+            suceso: false,
+            mensagem: "Erro na requisição.",
+            dados: error.message,
+         });
+      }
+   },
+
+   async listarPacientesFiltrados(request, response) {
+      try {
+         const { nome } = request.query; 
+         
+         if (!nome) {
+            return response.status(400).json({
+               sucesso: false,
+               mensagem: "Nome do paciente não fornecido.",
+            });
+         }
+
+         // Consulta SQL para buscar pacientes com base no nome digitado
+         const sql = `SELECT pac_id, pac_nome, pac_data_nascimento, pac_telefone
+                      FROM paciente
+                      WHERE paci_nome LIKE ?`;
+
+         const values = [`%${nome}%`]; // Filtra pacientes cujo nome contenha o texto digitado
+
+         const pacientes = await db.query(sql, values);
+
+         if (pacientes[0].length === 0) {
+            return response.status(404).json({
+               sucesso: false,
+               mensagem: "Nenhum paciente encontrado.",
+            });
+         }
+
+         return response.status(200).json({
+            sucesso: true,
+            dados: pacientes[0],
+         });
+      } catch (error) {
+         return response.status(500).json({
+            sucesso: false,
+            mensagem: "Erro na requisição.",
+            dados: error.message,
+         });
+      }
+   },
+
    async cadastrarPacientes(request, response) {
       try {
          //parametros recebidos no corp da requisição

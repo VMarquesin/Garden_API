@@ -47,10 +47,8 @@ router.delete("/usuarios/:usu_id", UsuariosController.apagarUsuarios); //condiç
 router.post("/usuarios/login", UsuariosController.login);
 // router.delete('/usuarios/del/:usu_id', UsuariosController.ocultarUsuario);
 
-// /:pac_id
-
 // paciente
-// router.get("/paciente/:pac_id", PacienteController.listaPaciente);
+router.get("/paciente/:pac_id", PacienteController.listaPaciente);
 router.get("/pacientes", PacienteController.listaPacientes);
 router.post("/paciente", PacienteController.cadastrarPacientes);
 router.patch("/paciente/:pac_id", PacienteController.editarPacientes); //condição paci não existente

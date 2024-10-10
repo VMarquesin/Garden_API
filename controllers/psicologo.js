@@ -4,7 +4,7 @@ module.exports = {
    async listarPsicologo(request, response) {
       try {
          const { psi_id } = request.params;
-         //instruções SQL
+         
          const sql = ` SELECT
             psi_endereco, psi_cnpj, usu_id
             FROM psicologo
