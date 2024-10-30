@@ -60,24 +60,37 @@ module.exports = {
    async cadastrarPsicologo(request, response) {
       try {
          //parametros recebidos no corp da requisição
-         const { psi_endereco, psi_cnpj, usu_id } = request.body;
+         const { usu_senha, usu_nome, usu_nick, usu_email, psi_cnpj, numero, estado,
+                 endereco, end_cep, confSenha, cidade, bairro} = request.body;
+         console.log(request.body)
          //instrução SQL
-         const sql = `INSERT INTO psicologo
+
+         const sqlUser = `INSERT INTO usuarios
+            (usu_nome,  usu_nick, usu_email, usu_senha, usu_adm)
+            VALUES (?, ?, ?, ?, ?)`;
+         //definiçaõ dos dados a serem inseriodos em um array
+         const valuesUser = [usu_nome, usu_nick, usu_email, usu_senha, 0];
+         //execução da instrução sql passando os parametros
+         const execSqlUser = await db.query(sqlUser, valuesUser);
+         //identificação do ID do resgistro inserido
+         const usu_id = execSqlUser[0].insertId;
+
+         const sqlPsi = `INSERT INTO psicologo
             ( psi_endereco, psi_cnpj, usu_id)
             VALUES (?, ?, ?)`;
          //definiçaõ dos dados a serem inseriodos em um array
-         const values = [psi_endereco, psi_cnpj, usu_id];
+         const valuesPsi = [endereco, psi_cnpj, usu_id];
          //execução da instrução sql passando os parametros
-         const execSql = await db.query(sql, values);
+         const execSqlPsi = await db.query(sqlPsi, valuesPsi);
          //identificação do ID do resgistro inserido
-         const psi_id = execSql[0].insertId;
+         const psi_id = execSqlPsi[0].insertId;
 
-         return response.status(200).json({
-            sucesso: true,
-            mensagem: "Cadastro do Psicologo efetuado com sucesso.",
-            dados: psi_id,
-            //menSql: execSql
-         });
+         // return response.status(200).json({
+         //    sucesso: true,
+         //    mensagem: "Cadastro do Psicologo efetuado com sucesso.",
+         //    dados: psi_id,
+         //    //menSql: execSql
+         // });
       } catch (error) {
          return response.status(500).json({
             sucesso: false,
