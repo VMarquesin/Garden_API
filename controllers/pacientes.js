@@ -120,6 +120,7 @@ module.exports = {
             pac_status,
          } = request.body;
          //instrução SQL
+
          const sql = `INSERT INTO paciente
             ( pac_telefone, pac_cpf, pac_filho,  pac_escolaridade,
             pac_data_nasc,  pac_trabalho, pac_estado_civil, usu_id, pac_status )
