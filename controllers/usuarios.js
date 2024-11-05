@@ -190,15 +190,19 @@ module.exports = {
    async login(request, response) {
       try {
          const { usu_email, usu_senha } = request.body;
-
-         const sql = `SELECT usu_id, usu_nome, usu_adm FROM usuarios 
-                WHERE usu_email = ? AND usu_senha = ?;`;
-
+   
+         // Adicione o JOIN para buscar o psi_id
+         const sql = `
+            SELECT u.usu_id, u.usu_nome, u.usu_adm, p.psi_id
+            FROM usuarios u
+            LEFT JOIN psicologo p ON u.usu_id = p.usu_id
+            WHERE u.usu_email = ? AND u.usu_senha = ?;
+         `;
+   
          const values = [usu_email, usu_senha];
-
          const usuarios = await db.query(sql, values);
          const nItens = usuarios[0].length;
-
+   
          if (nItens < 1) {
             return response.status(403).json({
                sucesso: false,
@@ -206,11 +210,11 @@ module.exports = {
                dados: null,
             });
          }
-
+   
          return response.status(200).json({
             sucesso: true,
             mensagem: "Login efetuado com sucesso",
-            dados: usuarios[0],
+            dados: usuarios[0], // Agora incluirá o psi_id
          });
       } catch (error) {
          return response.status(500).json({
@@ -219,5 +223,38 @@ module.exports = {
             dados: error.message,
          });
       }
+   
+   // async login(request, response) {
+   //    try {
+   //       const { usu_email, usu_senha } = request.body;
+
+   //       const sql = `SELECT usu_id, usu_nome, usu_adm FROM usuarios 
+   //              WHERE usu_email = ? AND usu_senha = ?;`;
+
+   //       const values = [usu_email, usu_senha];
+
+   //       const usuarios = await db.query(sql, values);
+   //       const nItens = usuarios[0].length;
+
+   //       if (nItens < 1) {
+   //          return response.status(403).json({
+   //             sucesso: false,
+   //             mensagem: "Login e/ou senha inválido.",
+   //             dados: null,
+   //          });
+   //       }
+
+   //       return response.status(200).json({
+   //          sucesso: true,
+   //          mensagem: "Login efetuado com sucesso",
+   //          dados: usuarios[0],
+   //       });
+   //    } catch (error) {
+   //       return response.status(500).json({
+   //          sucesso: false,
+   //          mensagem: "Erro na requisição.",
+   //          dados: error.message,
+   //       });
+   //    }
    },
 };
