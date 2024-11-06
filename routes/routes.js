@@ -123,6 +123,10 @@ router.get(
    "/paciente_psi_relacao",
    Paciente_psi_relacaoController.listarPaciente_psi_relacao
 );
+router.get(
+   "/paciente_psi_relacao/:psi_id",
+   Paciente_psi_relacaoController.Paciente_por_id
+);
 
 router.post(
    "/paciente_psi_relacao",

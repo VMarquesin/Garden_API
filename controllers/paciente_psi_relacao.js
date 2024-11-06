@@ -26,6 +26,33 @@ module.exports = {
          });
       }
    },
+
+   async Paciente_por_id(request, response) {
+      try {
+         const { psi_id } = request.params
+         //instruções SQL
+         const sql = ` SELECT
+         ppr_id, pac_id , psi_id, ppr_datainicial, ppr_datafinal
+         FROM paciente_psi_relacao WHERE psi_id = ?`;
+         //executa instruçoes SQL e armazana o resultado na variável usuários
+         const paciente_psi_relacao = await db.query(sql, psi_id);
+         //armazana em uma variável o número de resgistro retornados
+         const nItens = paciente_psi_relacao[0].length;
+
+         return response.status(200).json({
+            sucesso: true,
+            mensagem: "Lista de paciente - psicologo.",
+            dados: paciente_psi_relacao[0],
+            nItens,
+         });
+      } catch (error) {
+         return response.status(500).json({
+            suceso: false,
+            mensagem: "Erro na requisição.",
+            dados: error.message,
+         });
+      }
+   },
    async cadastrarPaciente_psi_relacao(request, response) {
       try {
          //parametros recebidos no corp da requisição

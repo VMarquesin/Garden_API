@@ -196,7 +196,7 @@ module.exports = {
             SELECT u.usu_id, u.usu_nome, u.usu_adm, p.psi_id
             FROM usuarios u
             LEFT JOIN psicologo p ON u.usu_id = p.usu_id
-            WHERE u.usu_email = ? AND u.usu_senha = ?;
+            WHERE u.usu_email = ? AND u.usu_senha = ? AND u.usu_adm = 1;
          `;
    
          const values = [usu_email, usu_senha];
