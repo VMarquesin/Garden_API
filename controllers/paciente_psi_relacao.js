@@ -31,9 +31,17 @@ module.exports = {
       try {
          const { psi_id } = request.params
          //instruções SQL
-         const sql = ` SELECT
-         ppr_id, pac_id , psi_id, ppr_datainicial, ppr_datafinal
-         FROM paciente_psi_relacao WHERE psi_id = ?`;
+         const sql = ` 
+         SELECT
+         pps.ppr_id, pps.pac_id , pps.psi_id, pps.ppr_datainicial, pps.ppr_datafinal,
+         p.pac_telefone, p.pac_cpf, p.pac_filho, p.pac_escolaridade, p.pac_data_nasc, p.pac_trabalho, p.pac_estado_civil,
+         u.usu_nome, u.usu_nick, u.usu_email
+         FROM paciente as p INNER JOIN paciente_psi_relacao as pps
+         ON pps.pac_id = p.pac_id
+         INNER JOIN usuarios as u
+         ON u.usu_id = p.usu_id
+         WHERE pps.psi_id = ?
+         `;
          //executa instruçoes SQL e armazana o resultado na variável usuários
          const paciente_psi_relacao = await db.query(sql, psi_id);
          //armazana em uma variável o número de resgistro retornados
