@@ -45,6 +45,7 @@ router.post("/usuarios", UsuariosController.cadastrarUsuarios);
 router.patch("/usuarios/:usu_id", UsuariosController.editarUsuarios); //condição para usu não existente
 router.delete("/usuarios/:usu_id", UsuariosController.apagarUsuarios); //condição para usu não existente
 router.post("/usuarios/login", UsuariosController.login);
+router.post("/usuarios/loginPaciente", UsuariosController.loginPaciente)
 // router.delete('/usuarios/del/:usu_id', UsuariosController.ocultarUsuario);
 
 // paciente

@@ -223,6 +223,43 @@ module.exports = {
             dados: error.message,
          });
       }
+   },
+      async loginPaciente(request, response) {
+         try {
+            const { usu_email, usu_senha } = request.body;
+      
+            // Adicione o JOIN para buscar o pac_id
+            const sql = `
+               SELECT u.usu_id, u.usu_nome, u.usu_adm, p.pac_id
+               FROM usuarios u
+               LEFT JOIN paciente p ON u.usu_id = p.usu_id
+               WHERE u.usu_email = ? AND u.usu_senha = ? AND u.usu_adm = 1;
+            `;
+      
+            const values = [usu_email, usu_senha];
+            const usuarios = await db.query(sql, values);
+            const nItens = usuarios[0].length;
+      
+            if (nItens < 1) {
+               return response.status(403).json({
+                  sucesso: false,
+                  mensagem: "Login e/ou senha inválido.",
+                  dados: null,
+               });
+            }
+      
+            return response.status(200).json({
+               sucesso: true,
+               mensagem: "Login efetuado com sucesso",
+               dados: usuarios[0], // Agora incluirá o pac_id
+            });
+         } catch (error) {
+            return response.status(500).json({
+               sucesso: false,
+               mensagem: "Erro na requisição.",
+               dados: error.message,
+            });
+         }
    
    // async login(request, response) {
    //    try {
