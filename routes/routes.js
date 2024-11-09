@@ -74,7 +74,7 @@ router.patch("/emocao/:emo_id", EmocaoController.editarEmocao); // condição
 router.delete("/emocao/:emo_id", EmocaoController.apagarEmocao); // condição
 
 //Emoçao Paciente
-router.get("/emocao_paciente", Emocao_PacienteController.listarEmocao_Paciente);
+router.get("/emocao_paciente/:pac_id", Emocao_PacienteController.listarEmocao_Paciente);
 router.post(
    "/emocao_paciente",
    Emocao_PacienteController.cadastrarEmocao_Paciente

@@ -43,10 +43,10 @@ module.exports = {
          pac_id,  pac_telefone, pac_cpf, pac_filho,  pac_escolaridade,
          pac_data_nasc,  pac_trabalho, pac_estado_civil, usu_id, pac_status = 1 AS pac_status
          FROM paciente
-         WHERE pac_status = 1;`;        
+         WHERE pac_status = 1;`;
 
          //executa instruçoes SQL e armazana o resultado na variável usuários
-         const paciente = await db.query(sql); 
+         const paciente = await db.query(sql);
          //armazana em uma variável o número de resgistro retornados
          const nItens = paciente[0].length;
 
@@ -67,8 +67,8 @@ module.exports = {
 
    async listarPacientesFiltrados(request, response) {
       try {
-         const { nome } = request.query; 
-         
+         const { nome } = request.query;
+
          if (!nome) {
             return response.status(400).json({
                sucesso: false,
@@ -105,8 +105,22 @@ module.exports = {
       }
    },
 
+
    async cadastrarPacientes(request, response) {
       try {
+         const { usu_nome, usu_nick, usu_email, usu_senha } =
+            request.body;
+         //instrução SQL
+         const sqlUsuario = `INSERT INTO usuarios
+         (usu_nome,  usu_nick, usu_email, usu_senha, usu_adm)
+         VALUES (?, ?, ?, ?, ?)`;
+         //definiçaõ dos dados a serem inseriodos em um array
+         const valuesUsuario = [usu_nome, usu_nick, usu_email, usu_senha, 0];
+         //execução da instrução sql passando os parametros
+         const execSqlUsurio = await db.query(sqlUsuario, valuesUsuario);
+         //identificação do ID do resgistro inserido
+         const usu_id =  execSqlUsurio[0].insertId;
+
          //parametros recebidos no corp da requisição
          const {
             pac_telefone,
@@ -116,8 +130,6 @@ module.exports = {
             pac_data_nasc,
             pac_trabalho,
             pac_estado_civil,
-            usu_id,
-            pac_status,
          } = request.body;
          //instrução SQL
 
@@ -135,7 +147,7 @@ module.exports = {
             pac_trabalho,
             pac_estado_civil,
             usu_id,
-            pac_status,
+            1,
          ];
          //execução da instrução sql passando os parametros
          const execSql = await db.query(sql, values);
