@@ -230,10 +230,10 @@ module.exports = {
       
             // Adicione o JOIN para buscar o pac_id
             const sql = `
-               SELECT u.usu_id, u.usu_nome, u.usu_adm, p.pac_id
+               SELECT u.usu_id, u.usu_nome, u.usu_adm = 1 AS usu_adm, p.pac_id
                FROM usuarios u
-               LEFT JOIN paciente p ON u.usu_id = p.usu_id
-               WHERE u.usu_email = ? AND u.usu_senha = ? AND u.usu_adm = 1;
+               INNER JOIN paciente p ON u.usu_id = p.usu_id
+               WHERE u.usu_email = ? AND u.usu_senha = ? AND u.usu_adm = 0;
             `;
       
             const values = [usu_email, usu_senha];
