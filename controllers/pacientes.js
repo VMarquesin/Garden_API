@@ -156,6 +156,7 @@ module.exports = {
          });
       }
    },
+   
    async editarPacientes(request, response) {
       try {
          //parametro recebidos pelo corpo da requisição
