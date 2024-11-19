@@ -1,8 +1,6 @@
 const db = require("../database/connection");
 
 module.exports = {
-
-
    async listaPaciente(request, response) {
       try {
          const { pac_id } = request.params;
@@ -68,7 +66,6 @@ module.exports = {
    async listarPacientesFiltrados(request, response) {
       try {
          const { nome } = request.query;
-
          if (!nome) {
             return response.status(400).json({
                sucesso: false,
@@ -108,19 +105,17 @@ module.exports = {
 
    async cadastrarPacientes(request, response) {
       try {
-         const { usu_nome, usu_nick, usu_email, usu_senha } =
-            request.body;
-         //instrução SQL
-         const sqlUsuario = `INSERT INTO usuarios
-         (usu_nome,  usu_nick, usu_email, usu_senha, usu_adm)
-         VALUES (?, ?, ?, ?, ?)`;
-         //definiçaõ dos dados a serem inseriodos em um array
-         const valuesUsuario = [usu_nome, usu_nick, usu_email, usu_senha, 0];
-         //execução da instrução sql passando os parametros
-         const execSqlUsurio = await db.query(sqlUsuario, valuesUsuario);
-         //identificação do ID do resgistro inserido
-         const usu_id =  execSqlUsurio[0].insertId;
+         const { usu_nome, usu_nick, usu_email, usu_senha } = request.body;
 
+         const sqlUsuario = `INSERT INTO usuarios
+      (usu_nome,  usu_nick, usu_email, usu_senha, usu_adm)
+      VALUES (?, ?, ?, ?, ?)`;
+
+         const valuesUsuario = [usu_nome, usu_nick, usu_email, usu_senha, 0];
+
+         const execSqlUsurio = await db.query(sqlUsuario, valuesUsuario);
+
+         const usu_id = execSqlUsurio[0].insertId;
          //parametros recebidos no corp da requisição
          const {
             pac_telefone,
@@ -168,6 +163,7 @@ module.exports = {
          });
       }
    },
+
    async editarPacientes(request, response) {
       try {
          //parametro recebidos pelo corpo da requisição

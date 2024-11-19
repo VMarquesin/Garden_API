@@ -40,11 +40,12 @@ const CidadeController = require("../controllers/cidade");
 
 //  usuarios
 router.get("/usuario/:usu_id", UsuariosController.listarUsuario);
-router.get("/usuarios", UsuariosController.listarUsuarios)
+router.get("/usuarios", UsuariosController.listarUsuarios);
 router.post("/usuarios", UsuariosController.cadastrarUsuarios);
 router.patch("/usuarios/:usu_id", UsuariosController.editarUsuarios); //condição para usu não existente
 router.delete("/usuarios/:usu_id", UsuariosController.apagarUsuarios); //condição para usu não existente
 router.post("/usuarios/login", UsuariosController.login);
+router.post("/usuarios/loginPaciente", UsuariosController.loginPaciente);
 // router.delete('/usuarios/del/:usu_id', UsuariosController.ocultarUsuario);
 
 // paciente
@@ -74,7 +75,14 @@ router.patch("/emocao/:emo_id", EmocaoController.editarEmocao); // condição
 router.delete("/emocao/:emo_id", EmocaoController.apagarEmocao); // condição
 
 //Emoçao Paciente
-router.get("/emocao_paciente/:pac_id", Emocao_PacienteController.listarEmocao_Paciente);
+router.get(
+   "/emocao_paciente/:pac_id",
+   Emocao_PacienteController.listarEmocao_Paciente
+);
+router.get(
+   "/emocao_paciente_periodo",
+   Emocao_PacienteController.listarEmocao_PacientePeriodo
+);
 router.post(
    "/emocao_paciente",
    Emocao_PacienteController.cadastrarEmocao_Paciente

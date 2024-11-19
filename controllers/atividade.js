@@ -82,17 +82,51 @@ module.exports = {
          });
       }
    },
+   // async apagarAtividade(request, response) {
+   //    try {
+   //       //parametro passado via URL na chamada da api pelo front-end
+   //       const { ati_id } = request.params;
+   //       //comando da exclusão
+   //       const sql = `DELETE FROM atividade WHERE ati_id = ?`;
+   //       //array com parametros da exclusão
+   //       const values = [ati_id];
+   //       //executa instrução no banco de dados
+   //       const excluir = await db.query(sql, values);
+
+   //       return response.status(200).json({
+   //          sucesso: true,
+   //          mensagem: `Atividade ${ati_id} excluída com sucesso`,
+   //          dados: excluir[0].affectedRows,
+   //       });
+   //    } catch (error) {
+   //       return response.status(500).json({
+   //          sucesso: false,
+   //          mensagem: "Erro na requisição.",
+   //          dados: error.message,
+   //       });
+   //    }
+   // }
    async apagarAtividade(request, response) {
       try {
-         //parametro passado via URL na chamada da api pelo front-end
+         // Parâmetro passado via URL na chamada da API pelo front-end
          const { ati_id } = request.params;
-         //comando da exclusão
-         const sql = `DELETE FROM atividade WHERE ati_id = ?`;
-         //array com parametros da exclusão
-         const values = [ati_id];
-         //executa instrução no banco de dados
-         const excluir = await db.query(sql, values);
-
+   
+         // Primeiro, exclua todas as referências na tabela `atividade_paciente` que dependem da atividade
+         const sqlDeleteDependencias = `DELETE FROM atividade_paciente WHERE ati_id = ?`;
+         await db.query(sqlDeleteDependencias, [ati_id]);
+   
+         // Depois, exclua a atividade da tabela `atividade`
+         const sqlDeleteAtividade = `DELETE FROM atividade WHERE ati_id = ?`;
+         const excluir = await db.query(sqlDeleteAtividade, [ati_id]);
+   
+         // Verifique se alguma linha foi afetada pela exclusão da atividade
+         if (excluir[0].affectedRows === 0) {
+            return response.status(404).json({
+               sucesso: false,
+               mensagem: `Atividade ${ati_id} não encontrada.`,
+            });
+         }
+   
          return response.status(200).json({
             sucesso: true,
             mensagem: `Atividade ${ati_id} excluída com sucesso`,
