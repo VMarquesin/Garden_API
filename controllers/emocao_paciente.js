@@ -4,11 +4,12 @@ module.exports = {
    async listarEmocao_Paciente(request, response) {
       try {
          //instruções SQL
-         const sql = ` SELECT
-         epa_id, emo_id, emo_data, pac_id
-            FROM emocao_paciente`;
+         const { pac_id } = request.params;
+         const sql = `SELECT empc.emo_data, em.emo_descricao FROM emocao_paciente empc 
+                     INNER JOIN emocao em on em.emo_id = empc.emo_id 
+                     WHERE empc.pac_id = ?;`;
          //executa instruçoes SQL e armazana o resultado na variável usuários
-         const emocao_paciente = await db.query(sql);
+         const emocao_paciente = await db.query(sql, [pac_id]);
          //armazana em uma variável o número de resgistro retornados
          const nItens = emocao_paciente[0].length;
 
