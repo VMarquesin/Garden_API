@@ -105,7 +105,16 @@ module.exports = {
 
    async cadastrarPacientes(request, response) {
       try {
+
+         const {ppr_id, psi_id } = request.body;
+         const sqlUsuario = `INSERT INTO paciente_psi_relacao (ppr_id, psi_id)
+         VALUES (?,?)`;
+
+         const valuesRelacao = [ppr_id, psi_id];
+         const execSqlRelacao = await db.query(sqlRelacao, valuesRelacao)
+
          const { usu_nome, usu_nick, usu_email, usu_senha } = request.body;
+         const psi_id = execSqlRelacao[0].insertId;
 
          const sqlUsuario = `INSERT INTO usuarios
       (usu_nome,  usu_nick, usu_email, usu_senha, usu_adm)
