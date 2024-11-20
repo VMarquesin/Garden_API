@@ -102,30 +102,23 @@ module.exports = {
       }
    },
 
-
    async cadastrarPacientes(request, response) {
       try {
+         const { ppr_id, psi_id, usu_nome, usu_nick, usu_email, usu_senha } =
+            request.body;
 
-         const {ppr_id, psi_id } = request.body;
-         const sqlUsuario = `INSERT INTO paciente_psi_relacao (ppr_id, psi_id)
-         VALUES (?,?)`;
-
+         // Inserir relação paciente-psicólogo
+         const sqlRelacao = `INSERT INTO paciente_psi_relacao (ppr_id, psi_id) VALUES (?, ?)`;
          const valuesRelacao = [ppr_id, psi_id];
-         const execSqlRelacao = await db.query(sqlRelacao, valuesRelacao)
+         const execSqlRelacao = await db.query(sqlRelacao, valuesRelacao);
 
-         const { usu_nome, usu_nick, usu_email, usu_senha } = request.body;
-         const psi_id = execSqlRelacao[0].insertId;
-
-         const sqlUsuario = `INSERT INTO usuarios
-      (usu_nome,  usu_nick, usu_email, usu_senha, usu_adm)
-      VALUES (?, ?, ?, ?, ?)`;
-
+         // Inserir usuário
+         const sqlUsuario = `INSERT INTO usuarios (usu_nome, usu_nick, usu_email, usu_senha, usu_adm) VALUES (?, ?, ?, ?, ?)`;
          const valuesUsuario = [usu_nome, usu_nick, usu_email, usu_senha, 0];
+         const execSqlUsuario = await db.query(sqlUsuario, valuesUsuario);
+         const usu_id = execSqlUsuario[0].insertId;
 
-         const execSqlUsurio = await db.query(sqlUsuario, valuesUsuario);
-
-         const usu_id = execSqlUsurio[0].insertId;
-         //parametros recebidos no corp da requisição
+         // Inserir paciente
          const {
             pac_telefone,
             pac_cpf,
@@ -135,14 +128,12 @@ module.exports = {
             pac_trabalho,
             pac_estado_civil,
          } = request.body;
-         //instrução SQL
 
-         const sql = `INSERT INTO paciente
-            ( pac_telefone, pac_cpf, pac_filho,  pac_escolaridade,
-            pac_data_nasc,  pac_trabalho, pac_estado_civil, usu_id, pac_status )
+         const sqlPaciente = `INSERT INTO paciente
+            (pac_telefone, pac_cpf, pac_filho, pac_escolaridade, pac_data_nasc, pac_trabalho, pac_estado_civil, usu_id, pac_status)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-         //definiçaõ dos dados a serem inseriodos em um array
-         const values = [
+
+         const valuesPaciente = [
             pac_telefone,
             pac_cpf,
             pac_filho,
@@ -153,16 +144,17 @@ module.exports = {
             usu_id,
             1,
          ];
-         //execução da instrução sql passando os parametros
-         const execSql = await db.query(sql, values);
-         //identificação do ID do resgistro inserido
-         const pac_id = execSql[0].insertId;
+         const execSqlPaciente = await db.query(sqlPaciente, valuesPaciente);
+         const pac_id = execSqlPaciente[0].insertId;
 
          return response.status(200).json({
             sucesso: true,
             mensagem: "Cadastro de paciente efetuado com sucesso.",
-            dados: pac_id,
-            //menSql: execSql
+            dados: {
+               pacienteId: pac_id,
+               usuarioId: usu_id,
+               relacaoId: execSqlRelacao[0].insertId,
+            },
          });
       } catch (error) {
          return response.status(500).json({
