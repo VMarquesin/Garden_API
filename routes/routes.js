@@ -79,10 +79,10 @@ router.get(
    "/emocao_paciente/:pac_id",
    Emocao_PacienteController.listarEmocao_Paciente
 );
-router.get(
-   "/emocao_paciente_periodo",
-   Emocao_PacienteController.listarEmocao_PacientePeriodo
-);
+// router.get(
+//    "/emocao_paciente_periodo",
+//    Emocao_PacienteController.listarEmocao_PacientePeriodo
+// );
 router.post(
    "/emocao_paciente",
    Emocao_PacienteController.cadastrarEmocao_Paciente

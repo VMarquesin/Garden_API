@@ -32,6 +32,7 @@ module.exports = {
          });
       }
    },
+   
    async cadastrarDiario(request, response) {
       try {
          //parametros recebidos no corp da requisição
