@@ -6,7 +6,7 @@ module.exports = {
          const { psi_id } = request.params;
 
          const sql = ` SELECT
-            psi_endereco, psi_cnpj, usu_id
+            psi_cnpj, usu_id
             FROM psicologo
             WHERE psi_id = ?`;
 
@@ -35,7 +35,7 @@ module.exports = {
       try {
          //instruções SQL
          const sql = ` SELECT
-            psi_id, psi_endereco, psi_cnpj, usu_id
+            psi_id, psi_cnpj, usu_id
             FROM psicologo`;
          //executa instruçoes SQL e armazana o resultado na variável usuários
          const psicologo = await db.query(sql);

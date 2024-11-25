@@ -93,7 +93,8 @@ router.delete(
 );
 
 //Atividade
-router.get("/atividade", AtividadeController.listarAtividade);
+router.get("/atividade/:psi_id", AtividadeController.listarAtividadeId);
+router.get("/atividade/", AtividadeController.listarAtividade);
 router.post("/atividade", AtividadeController.cadastrarAtividade);
 router.patch("/atividade/:ati_id", AtividadeController.editarAtividade);
 router.delete("/atividade/:ati_id", AtividadeController.apagarAtividade);

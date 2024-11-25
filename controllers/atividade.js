@@ -1,6 +1,36 @@
 const db = require("../database/connection");
 
 module.exports = {
+
+   async listarAtividadeId(request, response) {
+      try {
+         const {psi_id} = request.params;
+         //instruções SQL
+         const sql = ` SELECT
+            ati_id, ati_descricao, ati_data 
+            FROM atividade
+            WHERE psi_id = ?`;
+         //executa instruçoes SQL e armazana o resultado na variável usuários
+         const values = [psi_id];
+         const atividade = await db.query(sql, values);
+         //armazana em uma variável o número de resgistro retornados
+         const nItens = atividade[0].length;
+
+         return response.status(200).json({
+            sucesso: true,
+            mensagem: "Lista de Atividade.",
+            dados: atividade[0],
+            nItens,
+         });
+      } catch (error) {
+         return response.status(500).json({
+            suceso: false,
+            mensagem: "Erro na requisição.",
+            dados: error.message,
+         });
+      }
+   },
+
    async listarAtividade(request, response) {
       try {
          //instruções SQL
