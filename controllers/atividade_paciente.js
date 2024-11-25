@@ -1,6 +1,32 @@
 const db = require("../database/connection");
 
 module.exports = {
+   async listarAtividade_Pac(request, response) {
+      try {
+         //instruções SQL
+         const sql = ` SELECT
+            apa_id, ati_id, pac_id 
+            FROM atividade_paciente`;
+         //executa instruçoes SQL e armazana o resultado na variável usuários
+         const atividade_paciente = await db.query(sql);
+         //armazana em uma variável o número de resgistro retornados
+         const nItens = atividade_paciente[0].length;
+
+         return response.status(200).json({
+            sucesso: true,
+            mensagem: "Lista de atividades do paciente.",
+            dados: atividade_paciente[0],
+            nItens,
+         });
+      } catch (error) {
+         return response.status(500).json({
+            suceso: false,
+            mensagem: "Erro na requisição.",
+            dados: error.message,
+         });
+      }
+   },
+
    async listarAtividade_Paciente(request, response) {
       try {
          //instruções SQL

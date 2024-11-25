@@ -125,17 +125,6 @@ module.exports = {
          const execSqlUsuario = await db.query(sqlUsuario, valuesUsuario);
          const usu_id = execSqlUsuario[0].insertId;
 
-         // Inserir paciente
-         // const {
-         //    pac_telefone,
-         //    pac_cpf,
-         //    pac_filho,
-         //    pac_escolaridade,
-         //    pac_data_nasc,
-         //    pac_trabalho,
-         //    pac_estado_civil,
-         // } = request.body;
-
          const sqlPaciente = `INSERT INTO paciente
             (pac_telefone, pac_cpf, pac_filho, pac_escolaridade, pac_data_nasc, pac_trabalho, pac_estado_civil, usu_id, pac_status)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
@@ -159,22 +148,6 @@ module.exports = {
          const valuesRelacao = [pac_id, psi_id];
          const execSqlRelacao = await db.query(sqlRelacao, valuesRelacao);
          const ppr_id = execSqlRelacao[0].insertId;
-
-         // const dados = {
-         //    usu_nome,
-         //    usu_nick,
-         //    usu_email,
-         //    usu_senha,
-         //    pac_telefone,
-         //    pac_cpf,
-         //    pac_filho,
-         //    pac_escolaridade,
-         //    pac_data_nasc,
-         //    pac_trabalho,
-         //    pac_estado_civil,
-         //    ppr_id,
-         //    psi_id
-         // }
 
          return response.status(200).json({
             sucesso: true,
