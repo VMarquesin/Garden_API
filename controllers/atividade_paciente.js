@@ -3,12 +3,20 @@ const db = require("../database/connection");
 module.exports = {
    async listarAtividade_Pac(request, response) {
       try {
+         const { pac_id } = request.params
          //instruções SQL
          const sql = ` SELECT
-            apa_id, ati_id, pac_id 
-            FROM atividade_paciente`;
+            apa_id, ap.ati_id, pac_id, a.ati_descricao, a.ati_data, a.psi_id
+            FROM
+               atividade_paciente AS ap
+            INNER JOIN
+               atividade AS a
+            ON
+               ap.ati_id = a.ati_id
+            WHERE
+               ap.pac_id = ?`;
          //executa instruçoes SQL e armazana o resultado na variável usuários
-         const atividade_paciente = await db.query(sql);
+         const atividade_paciente = await db.query(sql, [pac_id]);
          //armazana em uma variável o número de resgistro retornados
          const nItens = atividade_paciente[0].length;
 
@@ -26,6 +34,7 @@ module.exports = {
          });
       }
    },
+
 
    async listarAtividade_Paciente(request, response) {
       try {

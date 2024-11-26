@@ -100,6 +100,7 @@ router.patch("/atividade/:ati_id", AtividadeController.editarAtividade);
 router.delete("/atividade/:ati_id", AtividadeController.apagarAtividade);
 
 //Atividade_Paciente
+router.get("/atividade_pac/:pac_id", Atividade_PacienteController.listarAtividade_Pac);
 router.get(
    "/atividade_paciente",
    Atividade_PacienteController.listarAtividade_Paciente
